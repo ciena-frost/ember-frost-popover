@@ -1,1 +1,31 @@
-@import 'node_modules/ember-frost-theme/scss/frost-theme';
+.tooltip-frost-popover {
+  max-width: inherit;
+  pointer-events: auto;
+  background-color: white;
+  border: solid 1px black;
+}
+
+.tooltip.bottom:after, .tooltip.bottom-left:after, .tooltip.bottom-right:after {
+  top: -1px;
+  border-top: solid 1px black;
+  border-left: solid 1px black;
+}
+
+.tooltip.right:after, .tooltip.right-top:after, .tooltip.right-bottom:after {
+  left: -1px;
+  border-bottom: solid 1px black;
+  border-left: solid 1px black;
+}
+
+.tooltip.top:after, .tooltip.top-left:after, .tooltip.top-right:after {
+  bottom: -1px;
+  border-bottom: solid 1px black;
+  border-right: solid 1px black;
+}
+
+
+.tooltip.left:after, .tooltip.left-top:after, .tooltip.left-bottom:after {
+  right: -1px;
+  border-top: solid 1px black;
+  border-right: solid 1px black;
+}
