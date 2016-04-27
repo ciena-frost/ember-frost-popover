@@ -14,7 +14,7 @@
  * [Installation](#installation)
  * [API](#api)
  * [Examples](#examples)
- * [Contributing](#contributing)
+ * [Contributing](#development)
 
 ## Installation
 ```
