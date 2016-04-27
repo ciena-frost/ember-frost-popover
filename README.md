@@ -11,10 +11,10 @@
 
 # ember-frost-popover
 
- * [Installation](#Installation)
- * [API](#API)
- * [Examples](#Examples)
- * [Contributing](#Contributing)
+ * [Installation](#installation)
+ * [API](#api)
+ * [Examples](#examples)
+ * [Contributing](#contributing)
 
 ## Installation
 ```
@@ -23,15 +23,41 @@ ember install ember-frost-popover
 
 ## API
 
-| Attribute | Type | Value | Description |
-| --------- | ---- | ----- | ----------- |
-| ` ` | ` ` | ` ` | Coming soon |
+| Interface | Attributes | Value | Description |
+| ----------| ---------- | ----- | ----------- |
+| Action | `close` | | Close the popover and optionally fire an external action |
+| Option | `offset` | | The amount in pixels the popover should appear from the target (defaults to 10) |
+| Option | `place` | | The location of the popover relative to the target |
+| | | `top-left`, `top`, `top-right` ||
+| | | `right-top`, `right`, `right-bottom` ||
+| | | `bottom-right`, `bottom`, `bottom-left` ||
+| | | `left-bottom`, `left`, `left-top` ||
+
 
 ## Examples
 
-### Example
-```handlebars
-Coming soon
+**template.hbs**
+
+```hbs
+{{#frost-button size='small' priority='primary'}}
+  <div class='text'>Target</div>
+  {{#frost-popover offset=10 place='bottom' as |close|}}
+    Popover content
+    {{#frost-button size="small" priority="tertiary" onClick=(action close (action 'controllerAction' 'my-value'))}}
+      <div class="text">Close</div>
+    {{/frost-button}}
+  {{/frost-popover}}
+{{/frost-button}}
+```
+
+**controller.js**
+
+```js
+actions: {
+  controllerAction (value) {
+    console.log(value) // 'my-value'
+  }
+}
 ```
 
 ## Development

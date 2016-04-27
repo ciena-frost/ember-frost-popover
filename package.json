@@ -16,7 +16,12 @@
   "engines": {
     "node": ">= 5.0.0"
   },
-  "author": "",
+  "author": {
+    "name": "Roxanne Panthaky"
+  },
+  "contributors": [
+    "Sophy Pal (https://github.com/sophypal)"
+  ],
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
@@ -41,8 +46,8 @@
     "ember-cli-notifications": "^3.2.0",
     "ember-lodash": "~0.0.6",
     "ember-truth-helpers": "^1.2.0",
-    "eslint": "^2.1.0",
-    "eslint-config-frost-standard": "^1.0.0",
+    "eslint": "^2.8.0",
+    "eslint-config-frost-standard": "^2.0.0",
     "ember-frost-css-core": "^1.0.0"
   },
   "keywords": [
