@@ -16,7 +16,7 @@ export default Ember.Component.extend({
     return Ember.String.htmlSafe('display:none;')
   }),
 
-  setup: Ember.on('didInitAttrs', function () {
+  setup: Ember.on('init', function () {
     const parentView = this.get('parentView')
     parentView.on('click', (event) => {
       if (!Ember.ViewUtils.isSimpleClick(event)) {
