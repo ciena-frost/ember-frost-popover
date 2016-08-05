@@ -10,6 +10,7 @@ module.exports = {
   afterInstall: function () {
     return this.addAddonsToProject({
       packages: [
+        {name: 'ember-lodash-shim', target: '0.1.4'},
         {name: 'ember-tooltips', target: '0.5.9'}
       ]
     })
