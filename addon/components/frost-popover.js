@@ -1,6 +1,6 @@
 import Ember from 'ember'
 import $ from 'jquery'
-import _ from 'lodash/lodash'
+import _ from 'lodash'
 import layout from './template'
 
 export default Ember.Component.extend({
