@@ -45,13 +45,13 @@ export default Ember.Component.extend({
       switch (position) {
         case 'bottom':
           top = targetRect.bottom + 5
-          left = targetRect.left
+          left = targetRect.left + targetRect.width / 2 - popoverRect.width / 2
           popoverElement.style.top = top + 'px'
           popoverElement.style.left = left + 'px'
           break
         case 'top':
           top = targetRect.top - targetRect.height - 5
-          left = targetRect.left
+          left = targetRect.left + targetRect.width / 2 - popoverRect.width / 2
           popoverElement.style.top = top + 'px'
           popoverElement.style.left = left + 'px'
           break
