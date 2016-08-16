@@ -1,2 +1,13 @@
+<div class='target'>
 frost-popover testbed
-{{frost-popover}}
+</div>
+{{#frost-popover target='.target'}}
+  <span class='inside'>Inside</span>
+{{/frost-popover}}
+
+<div class='close'>
+closest testbed
+{{#frost-popover target='.close' closest=true}}
+  <span class='inside'>Closest</span>
+{{/frost-popover}}
+</div>

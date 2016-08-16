@@ -1,66 +1,34 @@
-import Ember from 'ember'
 import $ from 'jquery'
-import _ from 'lodash'
-import layout from './template'
+import Ember from 'ember'
+import layout from '../templates/components/frost-popover'
+const ESC = 27
 
 export default Ember.Component.extend({
-  attributeBindings: ['style'],
   layout,
-
-  event: 'manual',
-  spacing: Ember.computed.alias('offset'),
-  typeClass: 'frost-popover',
-  visibility: false,
-
-  style: Ember.computed(function () {
-    return Ember.String.htmlSafe('display:none;')
-  }),
-
-  setup: Ember.on('init', function () {
-    const parentView = this.get('parentView')
-    parentView.on('click', (event) => {
-      if (!Ember.ViewUtils.isSimpleClick(event)) {
-        return true
-      }
-
-      this.toggleProperty('visibility')
-
-      if (this.get('visibility')) {
-        Ember.run.next(this, () => {
-          $('html').on('click.container.' + this.get('elementId'), (event) => {
-            let popover = Ember.$('.tooltip-frost-popover')
-            if (!popover.is(event.target) && _.isEmpty(popover.has(event.target))) {
-              this.set('visibility', false)
-              $('html').off('click.container.' + this.get('elementId'))
-            }
-          })
+  isVisible: false,
+  event: 'click',
+  closest: false,
+  position: 'bottom',
+  classNameBindings: ['position'],
+  classNames: ['tooltip-frost-popover'],
+  didRender () {
+    Ember.run.next(() => {
+      const context = this
+      if (this.get('closest')) {
+        this.$().closest(this.get('target')).on(this.get('event'), function () {
+          context.toggleProperty('isVisible')
+        })
+      } else {
+        this.get('parentView').$(this.get('target')).on(this.get('event'), function () {
+          context.toggleProperty('isVisible')
         })
       }
     })
-  }),
-
-  update: Ember.observer('visibility', function () {
-    if (this.get('visibility') === true) {
-      const parentView = this.get('parentView')
-      const tooltip = parentView.get('tooltip')
-      if (tooltip) {
-        tooltip.destroy()
-      }
-      parentView.renderTooltip(this)
-    }
-  }),
-
-  teardown: Ember.on('willDestroyElement', function () {
-    $('html').off('click.container.' + this.get('elementId'))
-  }),
-
+  },
   actions: {
-    close (action) {
-      this.set('visibility', false)
-      $('html').off('click.container.' + this.get('elementId'))
-      if (_.isFunction(action)) {
-        action()
-      }
+    close () {
+      if (this.get('isDestroyed')) { return }
+      this.set('isVisible', false)
     }
   }
 })
