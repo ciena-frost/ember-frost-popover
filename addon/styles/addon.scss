@@ -18,6 +18,9 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
+  &.invisible{
+    visibility: hidden;
+  }
 }
 
 .tooltip-frost-popover.bottom:after, .tooltip-frost-popover.bottom-left:after, .tooltip-frost-popover.bottom-right:after {
@@ -28,6 +31,7 @@
 
 .tooltip-frost-popover.right:after, .tooltip-frost-popover.right-top:after, .tooltip-frost-popover.right-bottom:after {
   left: -1px;
+  top: 9.5px;
   border-bottom: solid 1px black;
   border-left: solid 1px black;
 }
@@ -41,6 +45,7 @@
 
 .tooltip-frost-popover.left:after, .tooltip-frost-popover.left-top:after, .tooltip-frost-popover.left-bottom:after {
   right: -1px;
+  top: 9.5px;
   border-top: solid 1px black;
   border-right: solid 1px black;
 }
