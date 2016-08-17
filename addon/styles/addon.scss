@@ -7,6 +7,10 @@
   position: absolute;
   display: block;
   padding: 0 20px;
+  opacity: 1;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
   &:after {
     content: '';
     position: absolute;
@@ -19,7 +23,7 @@
     transform: rotate(45deg);
   }
   &.invisible{
-    visibility: hidden;
+    opacity: 0;
   }
 }
 
