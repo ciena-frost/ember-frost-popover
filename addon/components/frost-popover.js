@@ -32,16 +32,14 @@ export default Ember.Component.extend({
       this.set('visible', false)
     },
     togglePopover () {
-      this.toggleProperty('visible')      
+      this.toggleProperty('visible')
       let position = this.get('position')
       let targetRect
       targetRect = this.get('closest') ? this.$().closest(this.get('target'))[this.get('index')].getBoundingClientRect() : this.get('parentView').$(this.get('target'))[this.get('index')].getBoundingClientRect()
       let popoverElement = this.get('element')
       let popoverRect = popoverElement.getBoundingClientRect()
       let top
-      let bottom
       let left
-      let right
       switch (position) {
         case 'bottom':
           top = targetRect.bottom + 5
