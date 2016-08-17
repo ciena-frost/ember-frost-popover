@@ -7,14 +7,14 @@ frost-popover testbed
 
 <div class='close'>
 closest testbed
-{{#frost-popover target='.close' closest=true}}
+{{#frost-popover target='.close' excludePadding=true closest=true}}
   <span class='inside'>Closest</span>
 {{/frost-popover}}
 </div>
 
 <div class='close'>
 closest testbed
-{{#frost-popover target='.close' closest=true position='top'}}
+{{#frost-popover target='.close' excludePadding=true closest=true position='top'}}
   <span class='inside'>Closest</span>
 {{/frost-popover}}
 </div>
@@ -28,7 +28,7 @@ left testbed 1
 </div>
 <div class='lefty'>
 left testbed 2
-{{#frost-popover target='.lefty' closest=true position='left'}}
+{{#frost-popover target='.lefty' closest=true position='left' excludePadding=true}}
   <span class='inside'>left 2</span>
 {{/frost-popover}}
 </div>
@@ -46,7 +46,7 @@ left testbed 4
 </div>
 <div class='lefty'>
 left testbed 5
-{{#frost-popover target='.lefty' closest=true position='right' event='mouseenter mouseleave'}}
+{{#frost-popover target='.lefty' closest=true position='right' excludePadding=true event='mouseenter mouseleave'}}
   <span class='inside'>left 5 left 5left 5left 5left 5left 5left 5left 5left 5left 5</span>
 {{/frost-popover}}
 </div>
