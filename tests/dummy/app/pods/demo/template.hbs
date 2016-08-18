@@ -20,9 +20,9 @@ closest testbed
 </div>
 
 
-<div class='lefty'>
+<div id='foo' class='lefty'>
 left testbed 1
-{{#frost-popover target='.lefty' closest=true position='right'}}
+{{#frost-popover target='#foo' position='right'}}
   <span class='inside'>left1</span>
 {{/frost-popover}}
 </div>
@@ -50,3 +50,14 @@ left testbed 5
   <span class='inside'>left 5 left 5left 5left 5left 5left 5left 5left 5left 5left 5</span>
 {{/frost-popover}}
 </div>
+
+
+{{#frost-button size='small' priority='primary' class='button'}}
+  <div class='text'>Target</div>
+  {{#frost-popover target='.button' closest=true offset=10 position='bottom' as |close|}}
+    Popover content
+    {{#frost-button size="small" priority="tertiary" onClick=(action close)}}
+      <div class="text">Close</div>
+    {{/frost-button}}
+  {{/frost-popover}}
+{{/frost-button}}

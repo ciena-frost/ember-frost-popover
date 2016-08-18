@@ -26,12 +26,12 @@ ember install ember-frost-popover
 | Interface | Attributes | Value | Description |
 | ----------| ---------- | ----- | ----------- |
 | Action | `close` | | Close the popover and optionally fire an external action |
-| Option | `offset` | | The amount in pixels the popover should appear from the target (defaults to 10) |
-| Option | `place` | | The location of the popover relative to the target |
-| | | `top-left`, `top`, `top-right` ||
-| | | `right-top`, `right`, `right-bottom` ||
-| | | `bottom-right`, `bottom`, `bottom-left` ||
-| | | `left-bottom`, `left`, `left-top` ||
+| Option | `offset` | | The amount in pixels the popover should appear from the target (defaults to `10`) |
+| Option | `position` | `top`,`right`,`bottom`,`left`| The location of the popover relative to the target (defaults to `bottom`) |
+| Option | `closest` | boolean  | When true uses JQuery's [closest function](https://api.jquery.com/closest/). Otherwise just uses main selector `$(<target>)` (defaults to `false`).  |
+| Option | `excludePadding` | boolean  | When true removes the padding from position calculations (defaults to `false`).|
+| Option | `event |  | The event that will trigger the popover (defaults to on `click`). Uses [on()](http://api.jquery.com/on/)|
+| | |  ||
 
 
 ## Examples
@@ -39,25 +39,30 @@ ember install ember-frost-popover
 **template.hbs**
 
 ```hbs
-{{#frost-button size='small' priority='primary'}}
+{{#frost-button size='small' priority='primary' class='button'}}
   <div class='text'>Target</div>
-  {{#frost-popover offset=10 place='bottom' as |close|}}
+  {{#frost-popover target='.button' closest=true offset=10 position='bottom' as |close|}}
     Popover content
-    {{#frost-button size="small" priority="tertiary" onClick=(action close (action 'controllerAction' 'my-value'))}}
+    {{#frost-button size="small" priority="tertiary" onClick=(action close)}}
       <div class="text">Close</div>
     {{/frost-button}}
   {{/frost-popover}}
 {{/frost-button}}
-```
 
-**controller.js**
+<div class='target'>
+frost-popover testbed
+</div>
+{{#frost-popover target='.target'}}
+  <span class='inside'>Inside Popover</span>
+{{/frost-popover}}
 
-```js
-actions: {
-  controllerAction (value) {
-    console.log(value) // 'my-value'
-  }
-}
+
+<div class='lefty'>
+left testbed 5
+{{#frost-popover target='.lefty' closest=true position='right' excludePadding=true event='mouseenter mouseleave'}}
+  <span class='inside'>On Hover</span>
+{{/frost-popover}}
+</div>
 ```
 
 ## Development

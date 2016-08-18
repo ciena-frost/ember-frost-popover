@@ -1,6 +1,6 @@
 import Ember from 'ember'
 import layout from '../templates/components/frost-popover'
-
+import $ from 'jquery'
 export default Ember.Component.extend({
   layout,
   visible: false,
@@ -20,7 +20,7 @@ export default Ember.Component.extend({
           context.send('togglePopover')
         })
       } else {
-        this.get('parentView').$(this.get('target')).on(this.get('event'), function () {
+        $(this.get('target')).on(this.get('event'), function () {
           context.send('togglePopover')
         })
       }
