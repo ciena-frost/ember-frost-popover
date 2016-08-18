@@ -1,1 +1,1 @@
-export { default } from 'ember-frost-popover/templates/frost-popover';
+export { default } from 'ember-frost-popover/templates/frost-popover'
