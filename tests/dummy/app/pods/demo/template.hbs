@@ -1,2 +1,63 @@
+<div class='target'>
 frost-popover testbed
-{{frost-popover}}
+</div>
+{{#frost-popover target='.target'}}
+  <span class='inside'>Inside</span>
+{{/frost-popover}}
+
+<div class='close'>
+closest testbed
+{{#frost-popover target='.close' excludePadding=true closest=true}}
+  <span class='inside'>Closest</span>
+{{/frost-popover}}
+</div>
+
+<div class='close'>
+closest testbed
+{{#frost-popover target='.close' excludePadding=true closest=true position='top'}}
+  <span class='inside'>Closest</span>
+{{/frost-popover}}
+</div>
+
+
+<div id='foo' class='lefty'>
+left testbed 1
+{{#frost-popover target='#foo' position='right'}}
+  <span class='inside'>left1</span>
+{{/frost-popover}}
+</div>
+<div class='lefty'>
+left testbed 2
+{{#frost-popover target='.lefty' closest=true position='left' excludePadding=true}}
+  <span class='inside'>left 2</span>
+{{/frost-popover}}
+</div>
+<div class='lefty'>
+left testbed 3
+{{#frost-popover target='.lefty' closest=true position='bottom'}}
+  <span class='inside'>left 3</span>
+{{/frost-popover}}
+</div>
+<div class='lefty'>
+left testbed 4
+{{#frost-popover target='.lefty' closest=true position='top'}}
+  <span class='inside'>left 4 left 4 left 4left 4left 4left 4left 4</span>
+{{/frost-popover}}
+</div>
+<div class='lefty'>
+left testbed 5
+{{#frost-popover target='.lefty' closest=true position='right' excludePadding=true event='mouseenter mouseleave'}}
+  <span class='inside'>left 5 left 5left 5left 5left 5left 5left 5left 5left 5left 5</span>
+{{/frost-popover}}
+</div>
+
+
+{{#frost-button size='small' priority='primary' class='button'}}
+  <div class='text'>Target</div>
+  {{#frost-popover target='.button' closest=true offset=10 position='bottom' as |close|}}
+    Popover content
+    {{#frost-button size="small" priority="tertiary" onClick=(action close)}}
+      <div class="text">Close</div>
+    {{/frost-button}}
+  {{/frost-popover}}
+{{/frost-button}}
