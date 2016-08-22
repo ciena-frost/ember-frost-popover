@@ -37,7 +37,14 @@ export default Ember.Component.extend({
       let targetRect
       // eslint-disable-next-line max-len
       let targetElement = this.get('closest') ? this.$().closest(this.get('target'))[this.get('index')] : this.get('parentView').$(this.get('target'))[this.get('index')]
-      targetRect = targetElement.getBoundingClientRect()
+      targetRect = {
+        top: targetElement.offsetTop,
+        left: targetElement.offsetLeft,
+        bottom: targetElement.offsetTop + targetElement.offsetHeight,
+        right: targetElement.offsetLeft + targetElement.offsetWidth,
+        width: targetElement.offsetWidth,
+        height: targetElement.offsetHeight
+      }
       let popoverElement = this.get('element')
       let popoverRect = popoverElement.getBoundingClientRect()
       let top
