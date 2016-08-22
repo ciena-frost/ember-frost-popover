@@ -27,7 +27,7 @@ ember install ember-frost-popover
 | ----------| ---------- | ----- | ----------- |
 | Action | `close` | | Close the popover and optionally fire an external action |
 | Option | `offset` | | The amount in pixels the popover should appear from the target (defaults to `10`) |
-| Option | `position` | `top`,`right`,`bottom`,`left`| The location of the popover relative to the target (defaults to `bottom`) |
+| Option | `position` | `top`,`right`,`bottom`,`left`, `auto`| The location of the popover relative to the target. When `auto` is specified, it will dynamically reorient the popover. For example, if position is `auto left`, the popover will display to the left when possible, otherwise it will display right. (defaults to `bottom`) |
 | Option | `closest` | boolean  | When true uses JQuery's [closest function](https://api.jquery.com/closest/). Otherwise just uses main selector `$(<target>)` (defaults to `false`).  |
 | Option | `excludePadding` | boolean  | When true removes the padding from position calculations (defaults to `false`).|
 | Option | `event |  | The event that will trigger the popover (defaults to on `click`). Uses [on()](http://api.jquery.com/on/)|
