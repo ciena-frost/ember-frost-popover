@@ -11,7 +11,7 @@ module.exports = {
     return this.addAddonsToProject({
       packages: [
         {name: 'ember-lodash-shim', target: '0.1.4'},
-        {name: 'ember-tooltips', target: '0.5.9'}
+        {name: 'ember-prop-types', target: '2.5.6'}
       ]
     })
   }

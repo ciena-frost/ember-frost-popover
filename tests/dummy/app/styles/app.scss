@@ -10,17 +10,46 @@
   margin: auto;
 }
 
-.middle {
-  margin-left: 50%;
+.dummy-content {
+  position: relative;
 }
+
 .close {
   margin-right: 92%;
-  padding: 10px 0; 
+  padding: 10px 0;
 }
-.target {
-  margin-right: 89%;
+
+.resize-on, .resize-off {
+  margin: 10px 75px;
 }
-.lefty {
-  float: left;
-  padding: 0 10px;
+
+.viewport {
+  position: relative;
+  border: 1px solid black;
+  width: 400px;
+  height: 400px;
+
+  .viewport-left {
+    position: absolute;
+    top: 50%;
+    left: 0;
+  }
+
+  .viewport-right {
+    position: absolute;
+    top: 50%;
+    right: 0;
+  }
+
+  .viewport-top {
+    position: absolute;
+    top: 0;
+    left: 50%;
+  }
+
+  .viewport-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+  }
 }
