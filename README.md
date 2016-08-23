@@ -33,6 +33,7 @@ ember install ember-frost-popover
 | Option | `event` |  | The event that will trigger the popover (defaults to on `click`). Uses [on()](http://api.jquery.com/on/)|
 | Option | `target` |  | The selector string of the target that activates the popover |
 | Option | `viewport`| | The selector for the viewport. Defaults to 'body' |
+| Option | `resize` | | If set to false, will prevent the browser from resizing at the edges of the viewport. This preserves the *expand to fit content* behavior of `width: auto`. It defaults to true. |
 
 ## Specifying Target
 
