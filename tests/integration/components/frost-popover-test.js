@@ -10,22 +10,13 @@ describeComponent(
   },
   function () {
     it('renders', function () {
-      // Set any properties with this.set('myProperty', 'value')
-      // Handle any actions with this.on('myAction', function (val) { ... })
-      // Template block usage:
-      // this.render(hbs`
-      //   {{#frost-popover}}
-      //     template content
-      //   {{/frost-popover}}
-      // `)
-
       this.render(hbs`
-<div class='target'>
-frost-popover testbed
-</div>
-{{#frost-popover target='.target'}}
-  <span class='inside'>Inside</span>
-{{/frost-popover}}
+        <div class='target'>
+          frost-popover testbed
+        </div>
+        {{#frost-popover target='.target'}}
+          <span class='inside'>Inside</span>
+        {{/frost-popover}}
       `)
       expect(this.$()).to.have.length(1)
     })
@@ -33,21 +24,46 @@ frost-popover testbed
     it('clicks', function (done) {
       this.timeout(5000)
       this.render(hbs`
-<div id='foo' class='target'>
-frost-popover testbed
-</div>
-{{#frost-popover target='#foo'}}
-  <span class='inside'>Inside</span>
-{{/frost-popover}}
+        <div id='foo' class='target'>
+          click test
+        </div>
+        {{#frost-popover target='#foo'}}
+          <span class='inside'>Inside</span>
+        {{/frost-popover}}
       `)
       Ember.run.later(function () {
         this.$('#foo').click()
-      }, 1000)
+
+        Ember.run.later(function () {
+          expect(this.$('.visible')).to.have.length(1)
+          done()
+        }, 100)
+      }, 100)
+    })
+
+    it('constrains to the viewport', function (done) {
+      this.render(hbs`
+        <div id='viewport' style='width: 400px; height: 400px;'>
+          <span id='viewport-test'>
+            viewport test
+          </span>
+          {{#frost-popover target='#viewport-test' viewport='#viewport' position='bottom'}}
+            <span class='inside' style='display: inline-block; width: 100px'>Inside</span>
+          {{/frost-popover}}
+        </div>
+      `)
 
       Ember.run.later(function () {
-        expect(this.$('.visible')).to.have.length(1)
-        done()
-      }, 3000)
+        this.$('#viewport-test').click()
+        Ember.run.later(function () {
+          const viewportRect = this.$('#viewport')[0].getBoundingClientRect()
+          const popoverRect = this.$('.tooltip-frost-popover')[0].getBoundingClientRect()
+
+          expect(this.$('.visible')).to.have.length(1)
+          expect(popoverRect.left >= viewportRect.left).to.equal(true)
+          done()
+        }, 100)
+      }, 100)
     })
   }
 )

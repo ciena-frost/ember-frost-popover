@@ -1,63 +1,96 @@
-<div class='target'>
-frost-popover testbed
-</div>
-{{#frost-popover target='.target'}}
-  <span class='inside'>Inside</span>
+<h2>DOM Placements</h2>
+
+{{frost-button size='small' priority='primary' class='sibling' text='Sibling Tooltip'}}
+{{#frost-popover target='.sibling'}}
+  <span class='inside'>This tooltip was alongside the target</span>
 {{/frost-popover}}
 
-<div class='close'>
-closest testbed
-{{#frost-popover target='.close' excludePadding=true closest=true}}
-  <span class='inside'>Closest</span>
-{{/frost-popover}}
-</div>
+{{#frost-button size='small' priority='primary' class='child' text='Child Tooltip'}}
+  {{#frost-popover target='.child' excludePadding=true closest=true}}
+    <span class='inside'>This tooltip was inside</span>
+  {{/frost-popover}}
+{{/frost-button}}
 
-<div class='close'>
-closest testbed
-{{#frost-popover target='.close' excludePadding=true closest=true position='top'}}
-  <span class='inside'>Closest</span>
-{{/frost-popover}}
-</div>
+<h2>Positions</h2>
 
+{{#frost-button size='small' priority='primary' class='button-top' text='Top'}}
+  {{#frost-popover target='.button-top' closest=true position='top'}}
+    <span class='inside'>Tooltip is showing above the target</span>
+  {{/frost-popover}}
+{{/frost-button}}
 
-<div id='foo' class='lefty'>
-left testbed 1
-{{#frost-popover target='#foo' position='right'}}
-  <span class='inside'>left1</span>
-{{/frost-popover}}
-</div>
-<div class='lefty'>
-left testbed 2
-{{#frost-popover target='.lefty' closest=true position='left' excludePadding=true}}
-  <span class='inside'>left 2</span>
-{{/frost-popover}}
-</div>
-<div class='lefty'>
-left testbed 3
-{{#frost-popover target='.lefty' closest=true position='bottom'}}
-  <span class='inside'>left 3</span>
-{{/frost-popover}}
-</div>
-<div class='lefty'>
-left testbed 4
-{{#frost-popover target='.lefty' closest=true position='top'}}
-  <span class='inside'>left 4 left 4 left 4left 4left 4left 4left 4</span>
-{{/frost-popover}}
-</div>
-<div class='lefty'>
-left testbed 5
-{{#frost-popover target='.lefty' closest=true position='right' excludePadding=true event='mouseenter mouseleave'}}
-  <span class='inside'>left 5 left 5left 5left 5left 5left 5left 5left 5left 5left 5</span>
-{{/frost-popover}}
-</div>
+{{#frost-button size='small' priority='primary' class='button-right' text='Right'}}
+  {{#frost-popover target='.button-right' closest=true position='right'}}
+    <span class='inside'>Tooltip is showing to the right of the target</span>
+  {{/frost-popover}}
+{{/frost-button}}
 
+{{#frost-button size='small' priority='primary' class='button-bottom' text='Bottom'}}
+  {{#frost-popover target='.button-bottom' closest=true position='bottom'}}
+    <span class='inside'>Tooltip is showing below the target</span>
+  {{/frost-popover}}
+{{/frost-button}}
 
-{{#frost-button size='small' priority='primary' class='button'}}
-  <div class='text'>Target</div>
+{{#frost-button size='small' priority='primary' class='button-left' text='Left'}}
+  {{#frost-popover target='.button-left' closest=true position='left'}}
+    <span class='inside'>Tooltip is showing to the left of the target</span>
+  {{/frost-popover}}
+{{/frost-button}}
+
+<h2>Activating Event</h2>
+{{#frost-button size='small' priority='primary' class='event-mouse' text='Mouseenter'}}
+  {{#frost-popover target='.event-mouse' closest=true event='mouseenter mouseleave'}}
+    <span class='inside'>Tooltip is toggled on mouse enter and mouse leave</span>
+  {{/frost-popover}}
+{{/frost-button}}
+
+{{#frost-button size='small' priority='primary' class='event-click' text='Click'}}
+  {{#frost-popover target='.event-click' closest=true event='click'}}
+    <span class='inside'>tooltip is toggled on click</span>
+  {{/frost-popover}}
+{{/frost-button}}
+
+<h2>Other Features</h2>
+{{#frost-button size='small' priority='primary' class='button' text='Custom Close'}}
   {{#frost-popover target='.button' closest=true offset=10 position='bottom' as |close|}}
-    Popover content
+    This popover is yielding with a provided close action
     {{#frost-button size="small" priority="tertiary" onClick=(action close)}}
       <div class="text">Close</div>
     {{/frost-button}}
   {{/frost-popover}}
 {{/frost-button}}
+<br />
+{{#frost-button size='small' priority='primary' class='resize-on' text='Resize Enabled'}}
+  {{#frost-popover target='.resize-on' closest=true resize=true position='left'}}
+    <span class='inside'>Extra long content that would require resizing to be visible</span>
+  {{/frost-popover}}
+{{/frost-button}}
+<br />
+{{#frost-button size='small' priority='primary' class='resize-off' text='Resize Disabled'}}
+  {{#frost-popover target='.resize-off' closest=true resize=false position='left'}}
+    <span class='inside'>Extra long content that would require resizing to be visible</span>
+  {{/frost-popover}}
+{{/frost-button}}
+
+<h2>Viewport</h2>
+<div class='viewport'>
+  {{frost-button size='small' priority='primary' class='viewport-left' text='Left'}}
+  {{#frost-popover target='.viewport-left' viewport='.viewport'}}
+    <span class='inside'>Vertical position allows horizontal shift</span>
+  {{/frost-popover}}
+
+  {{frost-button size='small' priority='primary' class='viewport-right' text='Right'}}
+  {{#frost-popover target='.viewport-right' viewport='.viewport' position='top'}}
+    <span class='inside'>Vertical position allows horizontal shift</span>
+  {{/frost-popover}}
+
+  {{frost-button size='small' priority='primary' class='viewport-top' text='Top'}}
+  {{#frost-popover target='.viewport-top' viewport='.viewport' position='left'}}
+    <span class='inside'>Horizontal position allows vertical shift</span>
+  {{/frost-popover}}
+
+  {{frost-button size='small' priority='primary' class='viewport-bottom' text='Bottom'}}
+  {{#frost-popover target='.viewport-bottom' viewport='.viewport' position='right'}}
+    <span class='inside'>Horizontal position allows veritcal shift</span>
+  {{/frost-popover}}
+</div>
