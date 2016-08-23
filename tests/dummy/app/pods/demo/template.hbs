@@ -37,6 +37,13 @@
   {{/frost-popover}}
 {{/frost-button}}
 
+<p />
+{{#frost-button size='small' priority='primary' class='button-auto' text='Auto'}}
+  {{#frost-popover target='.button-auto' closest=true position='auto left'}}
+    <span class='inside'>This tooltip wants to be on the left, but sadly can't</span>
+  {{/frost-popover}}
+{{/frost-button}}
+
 <h2>Activating Event</h2>
 {{#frost-button size='small' priority='primary' class='event-mouse' text='Mouseenter'}}
   {{#frost-popover target='.event-mouse' closest=true event='mouseenter mouseleave'}}

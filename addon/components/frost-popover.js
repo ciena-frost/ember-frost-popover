@@ -2,13 +2,14 @@ import Ember from 'ember'
 import layout from '../templates/components/frost-popover'
 import $ from 'jquery'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
+import {checkLeft, checkRight, checkTop, checkBottom} from './util'
 
 const arrowMargin = 5
 const maxPlacementRetries = 5
 
 export default Ember.Component.extend(PropTypeMixin, {
   layout,
-  classNameBindings: ['position', 'visible:visible:invisible'],
+  classNameBindings: ['visible:visible:invisible', 'autoPosition'],
   classNames: ['tooltip-frost-popover'],
   propTypes: {
     closest: PropTypes.bool,
@@ -35,7 +36,8 @@ export default Ember.Component.extend(PropTypeMixin, {
       position: 'bottom',
       resize: true,
       viewport: 'body',
-      visible: false
+      visible: false,
+      autoPosition: 'bottom'
     }
   },
 
@@ -183,14 +185,54 @@ export default Ember.Component.extend(PropTypeMixin, {
     return rect
   },
 
+  /**
+   * Deciphers the position attribute to determine the correct position to use
+   * @param {Rect} targetRect - target client rect
+   * @param {Rect} popoverRect - popover client rect
+   * @param {Numer} offset - the offset requested
+   * @returns {String} the correct position
+   */
+  getAutoPosition (targetRect, popoverRect, offset) {
+    const positions = this.get('position').split(' ')
+    let position = positions.shift()
+    if (position === 'auto') {
+      position = positions.shift()
+      if (position === 'left') {
+        position = checkBottom(targetRect, popoverRect, offset, position)
+        position = checkTop(targetRect, popoverRect, offset, position)
+        position = checkRight(targetRect, popoverRect, offset, position)
+        position = checkLeft(targetRect, popoverRect, offset, position)
+      } else if (position === 'right') {
+        position = checkBottom(targetRect, popoverRect, offset, position)
+        position = checkTop(targetRect, popoverRect, offset, position)
+        position = checkLeft(targetRect, popoverRect, offset, position)
+        position = checkRight(targetRect, popoverRect, offset, position)
+      } else if (position === 'bottom') {
+        position = checkLeft(targetRect, popoverRect, offset, position)
+        position = checkRight(targetRect, popoverRect, offset, position)
+        position = checkTop(targetRect, popoverRect, offset, position)
+        position = checkBottom(targetRect, popoverRect, offset, position)
+      } else {
+        position = checkLeft(targetRect, popoverRect, offset, position)
+        position = checkRight(targetRect, popoverRect, offset, position)
+        position = checkBottom(targetRect, popoverRect, offset, position)
+        position = checkTop(targetRect, popoverRect, offset, position)
+      }
+    }
+
+    return position
+  },
+
   place () {
-    let position = this.get('position')
     let targetElement = this.getTarget()
     let popoverElement = this.get('element')
     let $popoverElement = $(popoverElement)
     let popoverRect = popoverElement.getBoundingClientRect()
     let targetRect = this.getOffsetRect(targetElement)
     let parentRect = this.getOffsetRect(targetElement.parentElement)
+    let position = this.getAutoPosition(targetElement.getBoundingClientRect(), popoverRect, this.get('offset'))
+
+    this.set('autoPosition', position)
 
     let top, left, bottom, right
 
