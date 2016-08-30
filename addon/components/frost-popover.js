@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import Ember from 'ember'
 import layout from '../templates/components/frost-popover'
 import $ from 'jquery'
@@ -294,12 +295,15 @@ export default Ember.Component.extend(PropTypeMixin, {
   },
 
   actions: {
-    close () {
+    close (action) {
       if (this.get('isDestroyed')) {
         return
       }
       this.set('visible', false)
       this.unregisterClickOff()
+      if (_.isFunction(action)) {
+        action()
+      }
     },
     togglePopover () {
       this.toggleProperty('visible')
