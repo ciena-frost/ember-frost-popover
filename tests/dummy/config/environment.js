@@ -39,7 +39,8 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
-    ENV.baseURL = '/frost-popover'
+    ENV.baseURL = '/ember-frost-popover'
+    ENV.locationType = 'hash'
     ENV.isDemo = true
     ENV['ember-cli-mirage'] = {
       enabled: true
