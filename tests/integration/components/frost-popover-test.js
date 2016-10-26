@@ -32,10 +32,10 @@ describeComponent(
         {{/frost-popover}}
       `)
       Ember.run.later(function () {
-        this.$('#foo').click()
+        Ember.$('#foo').click()
 
         Ember.run.later(function () {
-          expect(this.$('.visible')).to.have.length(1)
+          expect(Ember.$('.visible')).to.have.length(1)
           done()
         }, 100)
       }, 100)
@@ -54,12 +54,12 @@ describeComponent(
       `)
 
       Ember.run.later(function () {
-        this.$('#viewport-test').click()
+        Ember.$('#viewport-test').click()
         Ember.run.later(function () {
-          const viewportRect = this.$('#viewport')[0].getBoundingClientRect()
-          const popoverRect = this.$('.tooltip-frost-popover')[0].getBoundingClientRect()
+          const viewportRect = Ember.$('#viewport')[0].getBoundingClientRect()
+          const popoverRect = Ember.$('.tooltip-frost-popover')[0].getBoundingClientRect()
 
-          expect(this.$('.visible')).to.have.length(1)
+          expect(Ember.$('.visible')).to.have.length(1)
           expect(popoverRect.left >= viewportRect.left).to.equal(true)
           done()
         }, 100)
