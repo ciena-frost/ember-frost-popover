@@ -1,3 +1,8 @@
+# 2.0.1
+Added badges to the README
+trying to fix code coverage reporting
+
+
 # 2.0.0
 Upgrade Ember to v2.8 for LTS. 
 Fixed tests and linting after upgrade.
