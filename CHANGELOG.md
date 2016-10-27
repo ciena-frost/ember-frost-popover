@@ -1,3 +1,7 @@
+# 2.0.0
+Upgrade Ember to v2.8 for LTS. 
+Fixed tests and linting after upgrade.
+
 # 1.2.1
 - Update environment.js to fix demo
 
