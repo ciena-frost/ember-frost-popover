@@ -2,7 +2,8 @@ language: node_js
 sudo: required
 dist: trusty
 node_js:
-- '5.3'
+- '5.0'
+- 'stable'
 branches:
   except:
   - /^v[0-9\.]+/
@@ -25,9 +26,7 @@ install:
 - npm install
 - bower install
 after_success:
-- sed -i -- 's/SF:ember-frost-popover\/\(.*\)/SF:addon\/\1.js/' coverage/lcov.info
-  && rm -f coverage/lcov.info--
-- cat coverage/lcov.info | coveralls
+- .travis/publish-coverage.sh
 addons:
   apt:
     sources:
@@ -42,7 +41,7 @@ env:
   - EMBER_TRY_SCENARIO=ember-canary
   global:
     - CXX=g++-4.8
-    secure: MJJcmMkBU2D/ffyF/bqfNcZMD6q7SteAKbAmojLlbXiQA1KjOq6rYBYK+ZzNGBjyiPubDWhmLzyQ0Hzc3gGGWRCKcKIOktPywJrq6SqhwtVi7hvbSGqDjKq22y2KO9r9RD/DIbL+d8CL0t5JA5Y0ISsZdl2+EpC4RcSQIb7QugLD188nOgiGuxcodMYqstnHS3LPQVnX875RqWp4dDQlkyHF+XY89b9TwMkR0cXNeV8F7hzceLOrOsJ6dWJ+Ig44aQ7gcp88z9uO56MCo2YfEdlAcx/zINNDKD3ZUTlSOlSe8Bf7dFo8nQire0arbfPvcM0gBFz653ewhGGhxm6Tx0u7+Gzi4tcFj/yqhHBf07AvBXBCMMtLXr5sCRyVJ5WAkmev3voXeX72pP0wIjZ5IHom6i4rlZC9lhmlPFIRdKVRnlJue0+BtC8UXI0lJaBQNojtLvZDqG9/RfH073OdJbglSH6Fvrhtv6wsNiPXgqwgIqiNFbzGUxiZ0ccnq97vqhZkMCINNGeHIP+xBozfEzkH7rXUAy67p5goXoMIUwOZZR1Dq7MIV5ZHrRBj0ze5yxPb4QHigZbJHq9rQczyRxSW3K8KY5/HOHk/iUstbcE3dlEqDe/R56J1QaZ2DWZrp/PpvxzlFDq5m90UTyAT7roRnJ8LgRIZGAKvwS9CRs8=
+    - secure: MJJcmMkBU2D/ffyF/bqfNcZMD6q7SteAKbAmojLlbXiQA1KjOq6rYBYK+ZzNGBjyiPubDWhmLzyQ0Hzc3gGGWRCKcKIOktPywJrq6SqhwtVi7hvbSGqDjKq22y2KO9r9RD/DIbL+d8CL0t5JA5Y0ISsZdl2+EpC4RcSQIb7QugLD188nOgiGuxcodMYqstnHS3LPQVnX875RqWp4dDQlkyHF+XY89b9TwMkR0cXNeV8F7hzceLOrOsJ6dWJ+Ig44aQ7gcp88z9uO56MCo2YfEdlAcx/zINNDKD3ZUTlSOlSe8Bf7dFo8nQire0arbfPvcM0gBFz653ewhGGhxm6Tx0u7+Gzi4tcFj/yqhHBf07AvBXBCMMtLXr5sCRyVJ5WAkmev3voXeX72pP0wIjZ5IHom6i4rlZC9lhmlPFIRdKVRnlJue0+BtC8UXI0lJaBQNojtLvZDqG9/RfH073OdJbglSH6Fvrhtv6wsNiPXgqwgIqiNFbzGUxiZ0ccnq97vqhZkMCINNGeHIP+xBozfEzkH7rXUAy67p5goXoMIUwOZZR1Dq7MIV5ZHrRBj0ze5yxPb4QHigZbJHq9rQczyRxSW3K8KY5/HOHk/iUstbcE3dlEqDe/R56J1QaZ2DWZrp/PpvxzlFDq5m90UTyAT7roRnJ8LgRIZGAKvwS9CRs8=
 matrix:
   fast_finish: true
   allow_failures:
