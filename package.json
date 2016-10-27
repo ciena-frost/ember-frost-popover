@@ -7,10 +7,13 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "ember build",
     "start": "ember server",
-    "test": "npm run lint && ember test",
-    "lint": "eslint *.js addon app config tests --fix"
+    "build": "ember build",
+    "test": "npm run lint && COVERAGE=true ember test",
+    "lint": "npm run eslint && npm run sass-lint && npm run md-lint",
+    "eslint": "eslint *.js addon app blueprints config tests --fix",
+    "md-lint": "remark *.md",
+    "sass-lint": "sass-lint -q -v"
   },
   "repository": "git@github.com:ciena-frost/ember-frost-popover.git",
   "engines": {
@@ -29,6 +32,7 @@
     "ember-browserify": "1.1.11",
     "ember-cli": "~2.8.0",
     "ember-cli-app-version": "^1.0.0",
+    "ember-cli-code-coverage": "~0.3.4",
     "ember-cli-dependency-checker": "^1.2.0",
     "ember-cli-htmlbars-inline-precompile": "^0.3.1",
     "ember-cli-inject-live-reload": "^1.4.0",
@@ -58,6 +62,8 @@
     "lodash-es": "4.14.1",
     "redux": "3.5.2",
     "redux-thunk": "2.1.0",
+    "remark-cli": "^2.0.0",
+    "sass-lint": "^1.9.1",
     "svg4everybody": "2.1.0"
   },
   "keywords": [

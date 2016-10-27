@@ -1,5 +1,6 @@
 language: node_js
-sudo: false
+sudo: required
+dist: trusty
 node_js:
 - '5.3'
 branches:
@@ -9,9 +10,17 @@ before_install:
 - npm install -g coveralls pr-bumper
 - pr-bumper check
 before_script:
+- export CHROME_BIN=/usr/bin/google-chrome
 - "export DISPLAY=:99.0"
 - "sh -e /etc/init.d/xvfb start"
 - sleep 3 # give xvfb some time to start
+- sudo apt-get update
+- sudo apt-get install -y libappindicator1 fonts-liberation
+- wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+- sudo dpkg -i google-chrome*.deb
+script:
+- npm run lint
+- ember try:one $EMBER_TRY_SCENARIO --- ember tva --push-var='false' --msg-on=$EMBER_TRY_SCENARIO
 install:
 - npm install
 - bower install
@@ -26,10 +35,19 @@ addons:
     packages:
     - g++-4.8
 env:
-  matrix:
-  - CXX=g++-4.8
+ matrix:
+  - EMBER_TRY_SCENARIO=default
+  - EMBER_TRY_SCENARIO=ember-release
+  - EMBER_TRY_SCENARIO=ember-beta
+  - EMBER_TRY_SCENARIO=ember-canary
   global:
+    - CXX=g++-4.8
     secure: MJJcmMkBU2D/ffyF/bqfNcZMD6q7SteAKbAmojLlbXiQA1KjOq6rYBYK+ZzNGBjyiPubDWhmLzyQ0Hzc3gGGWRCKcKIOktPywJrq6SqhwtVi7hvbSGqDjKq22y2KO9r9RD/DIbL+d8CL0t5JA5Y0ISsZdl2+EpC4RcSQIb7QugLD188nOgiGuxcodMYqstnHS3LPQVnX875RqWp4dDQlkyHF+XY89b9TwMkR0cXNeV8F7hzceLOrOsJ6dWJ+Ig44aQ7gcp88z9uO56MCo2YfEdlAcx/zINNDKD3ZUTlSOlSe8Bf7dFo8nQire0arbfPvcM0gBFz653ewhGGhxm6Tx0u7+Gzi4tcFj/yqhHBf07AvBXBCMMtLXr5sCRyVJ5WAkmev3voXeX72pP0wIjZ5IHom6i4rlZC9lhmlPFIRdKVRnlJue0+BtC8UXI0lJaBQNojtLvZDqG9/RfH073OdJbglSH6Fvrhtv6wsNiPXgqwgIqiNFbzGUxiZ0ccnq97vqhZkMCINNGeHIP+xBozfEzkH7rXUAy67p5goXoMIUwOZZR1Dq7MIV5ZHrRBj0ze5yxPb4QHigZbJHq9rQczyRxSW3K8KY5/HOHk/iUstbcE3dlEqDe/R56J1QaZ2DWZrp/PpvxzlFDq5m90UTyAT7roRnJ8LgRIZGAKvwS9CRs8=
+matrix:
+  fast_finish: true
+  allow_failures:
+  - env: EMBER_TRY_SCENARIO=ember-canary
+  - env: EMBER_TRY_SCENARIO=ember-beta
 before_deploy:
 - pr-bumper bump
 deploy:
@@ -40,6 +58,8 @@ deploy:
     secure: am+Hub34RRnMcvsjJtB1jFMnnC9U6bb7+vP0W2VRLvcCjJB1s3gUkICigbd6uqyZRTRY1cw5CktIwPKRLwpsbSZ/2Aowd5L5TmoLuNgMvAO/USeP+N/K33pKvL6UTv+473mniAiOFt0pZ62s0y40XJtEmqMXcozen3t3Zdha/JlgxbrhZ+uEVrkzxnjM31Syes56HgD8r37EpcY8xLGcIYOCWIkU8awUxp687upKsDvhtYytmsNo/fPQE6nPft412ytgWJxhpIqKykJfMOPTHtk0QbTyR13PwdM0/YHnvzwq1EHKZFBVtE9jSKouHlzIw2b2mE6YprD++yEayYY0NOIqda9SBSOAvNz1kympEmo3Raq6fdih0el1pT2Nk6qrAH1wwuE3ZuqWk4FIDBo/QyniwE3ZrCI2ZfSBnWE23AY+hdJ7wfrrbU+uEUCSDWR9aMetvLpq4rlCrbI9hvEZZNvTTkrHloJORyhlAW7r7ZGi2Fry5c4RFtBHihofTmdNdSj4dbCPh6I+FStxlh8YT7D0lHCJEScolpP4WIwJUwHMwgdNSZ7yKN+Ot2y1AyHlNKPWOmIMxrP62JsKYx2ipqSbIuAc4or/Uwfj1nmInjQKXJtVc2owvaozuR/vGm89J2rIZdRixYTcgbjBUvRGYbNMzb+5rGxNl5a9U+Vwd7g=
   on:
     branch: master
+    condition: "$EMBER_TRY_SCENARIO = 'default'"
+    node: 'stable'
     tags: false
 after_deploy:
 - .travis/publish-gh-pages.sh
