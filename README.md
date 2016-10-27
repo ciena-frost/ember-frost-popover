@@ -7,14 +7,34 @@
 [npm-img]: https://img.shields.io/npm/v/ember-frost-popover.svg "NPM Version"
 [npm-url]: https://www.npmjs.com/package/ember-frost-popover
 
-[![Travis][ci-img]][ci-url] [![Coveralls][cov-img]][cov-url] [![NPM][npm-img]][npm-url]
+[ember-observer-badge]: http://emberobserver.com/badges/ember-frost-popover.svg "Ember Observer score"
+[ember-observer-badge-url]: http://emberobserver.com/addons/ember-frost-popover
+
+[ember-img]: https://img.shields.io/badge/ember-2.3+-orange.svg "Ember 2.3+"
+
+[bithound-img]: https://www.bithound.io/github/ciena-frost/ember-frost-popover/badges/score.svg "bitHound"
+[bithound-url]: https://www.bithound.io/github/ciena-frost/ember-frost-popover
+
 
 # ember-frost-popover
 
- * [Installation](#installation)
- * [API](#api)
- * [Examples](#examples)
- * [Contributing](#development)
+###### Dependencies
+
+![Ember][ember-img]
+[![NPM][npm-img]][npm-url]
+
+###### Health
+
+[![Travis][ci-img]][ci-url]
+[![Coveralls][cov-img]][cov-url]
+
+###### Security
+
+[![bitHound][bithound-img]][bithound-url]
+
+###### Ember Observer score
+[![EmberObserver][ember-observer-badge]][ember-observer-badge-url]
+
 
 ## Installation
 ```
