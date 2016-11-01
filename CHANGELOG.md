@@ -1,3 +1,9 @@
+# 2.0.2
+
+* **Added** `ember-frost-core` to blueprints.
+
+
+
 # 2.0.1
 Added badges to the README
 trying to fix code coverage reporting
