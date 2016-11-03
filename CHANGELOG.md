@@ -1,3 +1,8 @@
+# 3.0.0
+**upgrade** to node 6.x
+
+
+
 # 2.0.2
 
 * **Added** `ember-frost-core` to blueprints.
