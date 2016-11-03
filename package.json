@@ -17,7 +17,7 @@
   },
   "repository": "git@github.com:ciena-frost/ember-frost-popover.git",
   "engines": {
-    "node": ">= 5.0.0"
+    "node": ">= 6.0.0"
   },
   "author": {
     "name": "Roxanne Panthaky"
