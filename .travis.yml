@@ -2,7 +2,7 @@ language: node_js
 sudo: required
 dist: trusty
 node_js:
-- '5.0'
+- '6.9'
 - 'stable'
 branches:
   except:
