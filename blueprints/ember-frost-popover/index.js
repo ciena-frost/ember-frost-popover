@@ -11,7 +11,7 @@ module.exports = {
     return this.addAddonsToProject({
       packages: [
         {name: 'ember-frost-core', target: '^1.0.0'},
-        {name: 'ember-lodash-shim', target: '0.1.4'},
+        {name: 'ember-lodash-shim', target: '^1.0.1'},
         {name: 'ember-prop-types', target: '^3.0.0'}
       ]
     })
