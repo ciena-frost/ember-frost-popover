@@ -105,15 +105,21 @@ export default Component.extend(PropTypeMixin, {
     const index = this.get('index')
     const parent = this.get('parentView')
 
+    let $elements
+
     if (this.get('closest')) {
-      return this.$().closest(target)[index]
+      $elements = this.$().closest(target)
+    } else if (parent && parent.$) {
+      $elements = parent.$(target)
+    } else {
+      $elements = $(target)
     }
 
-    if (parent && parent.$) {
-      return parent.$(target)[index]
+    if ($elements && $elements.length > index) {
+      return $elements[index]
     }
 
-    return $(target)[index]
+    return null
   },
 
 /* eslint-disable complexity */
