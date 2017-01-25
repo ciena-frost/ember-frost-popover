@@ -66,11 +66,11 @@ The `popover` is displayed using `absolute` positioning. The `target`'s coordina
 **template.hbs**
 
 ```hbs
-{{#frost-button size='small' priority='primary' class='button'}}
+{{#frost-button hook='popoverButton' size='small' priority='primary' class='button'}}
   <div class='text'>Target</div>
   {{#frost-popover target='.button' closest=true offset=10 position='bottom' as |close|}}
     Popover content
-    {{#frost-button size="small" priority="tertiary" onClick=(action close)}}
+    {{#frost-button hook='closeButton' size="small" priority="tertiary" onClick=(action close)}}
       <div class="text">Close</div>
     {{/frost-button}}
   {{/frost-popover}}

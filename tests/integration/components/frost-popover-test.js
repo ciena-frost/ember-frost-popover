@@ -1,4 +1,6 @@
 import {expect} from 'chai'
+import Ember from 'ember'
+const {$, run} = Ember
 import {describeComponent, it} from 'ember-mocha'
 import hbs from 'htmlbars-inline-precompile'
 
@@ -31,11 +33,11 @@ describeComponent(
           <span class='inside'>Inside</span>
         {{/frost-popover}}
       `)
-      Ember.run.later(function () {
-        Ember.$('#foo').click()
+      run.later(function () {
+        $('#foo').click()
 
-        Ember.run.later(function () {
-          expect(Ember.$('.visible')).to.have.length(1)
+        run.later(function () {
+          expect($('.visible')).to.have.length(1)
           done()
         }, 100)
       }, 100)
@@ -53,13 +55,13 @@ describeComponent(
         </div>
       `)
 
-      Ember.run.later(function () {
-        Ember.$('#viewport-test').click()
-        Ember.run.later(function () {
-          const viewportRect = Ember.$('#viewport')[0].getBoundingClientRect()
-          const popoverRect = Ember.$('.tooltip-frost-popover')[0].getBoundingClientRect()
+      run.later(function () {
+        $('#viewport-test').click()
+        run.later(function () {
+          const viewportRect = $('#viewport')[0].getBoundingClientRect()
+          const popoverRect = $('.tooltip-frost-popover')[0].getBoundingClientRect()
 
-          expect(Ember.$('.visible')).to.have.length(1)
+          expect($('.visible')).to.have.length(1)
           expect(popoverRect.left >= viewportRect.left).to.equal(true)
           done()
         }, 100)
