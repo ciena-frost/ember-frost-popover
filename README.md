@@ -10,7 +10,7 @@
 [ember-observer-badge]: http://emberobserver.com/badges/ember-frost-popover.svg "Ember Observer score"
 [ember-observer-badge-url]: http://emberobserver.com/addons/ember-frost-popover
 
-[ember-img]: https://img.shields.io/badge/ember-2.3+-orange.svg "Ember 2.3+"
+[ember-img]: https://img.shields.io/badge/ember-2.4+-orange.svg "Ember 2.4+"
 
 [bithound-img]: https://www.bithound.io/github/ciena-frost/ember-frost-popover/badges/score.svg "bitHound"
 [bithound-url]: https://www.bithound.io/github/ciena-frost/ember-frost-popover
