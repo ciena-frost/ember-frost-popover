@@ -1,14 +1,15 @@
-import _ from 'lodash'
 import Ember from 'ember'
-import layout from '../templates/components/frost-popover'
-import $ from 'jquery'
+const {$, Component, run} = Ember
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
-import {checkLeft, checkRight, checkTop, checkBottom} from './util'
+import _ from 'lodash'
+
+import layout from '../templates/components/frost-popover'
+import {checkBottom, checkLeft, checkRight, checkTop} from './util'
 
 const arrowMargin = 5
 const maxPlacementRetries = 5
 
-export default Ember.Component.extend(PropTypeMixin, {
+export default Component.extend(PropTypeMixin, {
   layout,
   classNameBindings: ['visible:visible:invisible', 'autoPosition'],
   classNames: ['tooltip-frost-popover'],
@@ -43,7 +44,7 @@ export default Ember.Component.extend(PropTypeMixin, {
   },
 
   didInsertElement () {
-    Ember.run.next(() => {
+    run.next(() => {
       const target = this.getTarget()
       const event = this.get('event')
 
@@ -66,7 +67,7 @@ export default Ember.Component.extend(PropTypeMixin, {
   },
 
   registerClickOff () {
-    Ember.run.next(this, () => {
+    run.next(this, () => {
       const elementId = this.get('elementId')
       $('html').on(`click.container.${elementId}`, (event) => {
         let popover = this.get('element')
@@ -103,8 +104,22 @@ export default Ember.Component.extend(PropTypeMixin, {
     const target = this.get('target')
     const index = this.get('index')
     const parent = this.get('parentView')
-    return this.get('closest') ? this.$().closest(target)[index]
-      : (parent.$() ? parent.$(target)[index] : $(target)[index])
+
+    let $elements
+
+    if (this.get('closest')) {
+      $elements = this.$().closest(target)
+    } else if (parent && parent.$) {
+      $elements = parent.$(target)
+    } else {
+      $elements = $(target)
+    }
+
+    if ($elements && $elements.length > index) {
+      return $elements[index]
+    }
+
+    return null
   },
 
 /* eslint-disable complexity */
