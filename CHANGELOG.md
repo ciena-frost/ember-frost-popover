@@ -1,3 +1,8 @@
+# 4.2.0
+
+* **Removed** lodash from dependencies.
+
+
 # 4.1.0
 
 * **Added** additional builds to CI to make sure addon works with latest versions of Ember.
