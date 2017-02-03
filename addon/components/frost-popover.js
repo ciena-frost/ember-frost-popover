@@ -1,7 +1,6 @@
 import Ember from 'ember'
-const {$, Component, run} = Ember
+const {$, Component, run, typeOf} = Ember
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
-import _ from 'lodash'
 
 import layout from '../templates/components/frost-popover'
 import {checkBottom, checkLeft, checkRight, checkTop} from './util'
@@ -320,7 +319,7 @@ export default Component.extend(PropTypeMixin, {
       }
       this.set('visible', false)
       this.unregisterClickOff()
-      if (_.isFunction(action)) {
+      if (typeOf(action) === 'function') {
         action()
       }
     },
