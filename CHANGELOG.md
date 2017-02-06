@@ -1,3 +1,9 @@
+# 4.2.1
+
+* **Updated** build to disable prototype extensions.
+* **Updated** CI to test in Chrome as well as Firefox.
+
+
 # 4.2.0
 
 * **Removed** lodash from dependencies.
