@@ -1,6 +1,6 @@
 {
   "name": "ember-frost-popover",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "dependencies": {
     "abbrev": {
       "version": "1.0.9",
@@ -998,9 +998,9 @@
       "dev": true
     },
     "caniuse-db": {
-      "version": "1.0.30000620",
+      "version": "1.0.30000621",
       "from": "caniuse-db@>=1.0.30000618 <2.0.0",
-      "resolved": "https://registry.npmjs.org/caniuse-db/-/caniuse-db-1.0.30000620.tgz",
+      "resolved": "https://registry.npmjs.org/caniuse-db/-/caniuse-db-1.0.30000621.tgz",
       "dev": true
     },
     "capture-exit": {
@@ -2111,9 +2111,9 @@
       "dev": true
     },
     "ember-prop-types": {
-      "version": "3.10.2",
+      "version": "3.10.3",
       "from": "ember-prop-types@>=3.10.2 <4.0.0",
-      "resolved": "https://registry.npmjs.org/ember-prop-types/-/ember-prop-types-3.10.2.tgz",
+      "resolved": "https://registry.npmjs.org/ember-prop-types/-/ember-prop-types-3.10.3.tgz",
       "dev": true,
       "dependencies": {
         "ember-get-config": {
@@ -3256,9 +3256,9 @@
       "dev": true
     },
     "hosted-git-info": {
-      "version": "2.1.5",
+      "version": "2.2.0",
       "from": "hosted-git-info@>=2.1.4 <3.0.0",
-      "resolved": "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.1.5.tgz"
+      "resolved": "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.2.0.tgz"
     },
     "htmlparser2": {
       "version": "3.9.2",
@@ -7363,9 +7363,9 @@
       "dev": true,
       "dependencies": {
         "acorn": {
-          "version": "4.0.8",
+          "version": "4.0.9",
           "from": "acorn@>=4.0.1 <5.0.0",
-          "resolved": "https://registry.npmjs.org/acorn/-/acorn-4.0.8.tgz",
+          "resolved": "https://registry.npmjs.org/acorn/-/acorn-4.0.9.tgz",
           "dev": true
         }
       }

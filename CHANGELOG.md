@@ -1,3 +1,7 @@
+# 4.2.2
+* **Updated** integration and unit tests to remove the deprecated use of `describeComponent()`
+
+
 # 4.2.1
 
 * **Updated** build to disable prototype extensions.
