@@ -1,10 +1,9 @@
 @import 'node_modules/ember-frost-core/addon/styles/addon';
 
-$tooltip-shadow: rgba(0, 0, 0, .2);
-
+$tooltip-shadow: rgba(0, 0, 0, .2) !default;
+$tooltip-zindex: 999 !default;
 .tooltip-frost-popover {
   display: block;
-  position: absolute;
   max-width: inherit;
   padding: .5em;
   transition: opacity .25s ease-in-out;
@@ -16,7 +15,7 @@ $tooltip-shadow: rgba(0, 0, 0, .2);
   box-shadow: 0 0 5px $tooltip-shadow;
   opacity: 1;
   pointer-events: auto;
-
+  z-index: $tooltip-zindex;  
   .tooltip-arrow {
     position: absolute;
     width: 10px;
@@ -26,14 +25,9 @@ $tooltip-shadow: rgba(0, 0, 0, .2);
     background: inherit;
   }
 
-  &.invisible {
-    opacity: 0;
-    pointer-events: none;
-  }
-
   &.bottom-right,
   &.bottom-left,
-  &.bottom {
+  &.bottom-center {
     .tooltip-arrow {
       top: -1px;
       left: 50%;
@@ -42,7 +36,7 @@ $tooltip-shadow: rgba(0, 0, 0, .2);
     }
   }
 
-  &.right,
+  &.right-middle,
   &.right-top,
   &.right-bottom {
     .tooltip-arrow {
@@ -53,7 +47,7 @@ $tooltip-shadow: rgba(0, 0, 0, .2);
     }
   }
 
-  &.top,
+  &.top-center,
   &.top-left,
   &.top-right {
     .tooltip-arrow {
@@ -64,7 +58,7 @@ $tooltip-shadow: rgba(0, 0, 0, .2);
     }
   }
 
-  &.left,
+  &.left-middle,
   &.left-top,
   &.left-bottom {
     .tooltip-arrow {

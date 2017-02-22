@@ -12,7 +12,11 @@ module.exports = function (defaults) {
   })
 
   app.import('bower_components/sinonjs/sinon.js')
+  
+  app.import('bower_components/tether/dist/js/tether.min.js')
+  app.import('bower_components/tether-drop/dist/js/drop.min.js')
 
+  app.import('bower_components/tether-drop/dist/css/drop-theme-arrows.min.css')
   /*
     This build file specifes the options for the dummy test app of this
     addon, located in `/tests/dummy`
