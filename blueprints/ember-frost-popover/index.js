@@ -13,6 +13,8 @@ module.exports = {
         {name: 'ember-frost-core', target: '^1.0.0'},
         {name: 'ember-prop-types', target: '^3.0.0'}
       ]
-    })
+    }).then(() => {
+      return this.addBowerPackageToProject('tether-drop', '1.4.2')
+    }
   }
 }

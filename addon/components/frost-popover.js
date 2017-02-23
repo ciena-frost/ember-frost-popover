@@ -1,105 +1,74 @@
 import Ember from 'ember'
-const {$, Component, run, typeOf, String: {dasherize}, computed, assert} = Ember
-import PropTypeMixin, {PropTypes} from 'ember-prop-types'
+const {$, run} = Ember
+import {PropTypes} from 'ember-prop-types'
+import {Component} from 'ember-frost-core'
 
 import layout from '../templates/components/frost-popover'
-import {checkBottom, checkLeft, checkRight, checkTop} from './util'
 
-const arrowMargin = 5
-const maxPlacementRetries = 5
-
-export default Component.extend(PropTypeMixin, {
+export default Component.extend({
   layout,
-  classNameBindings: ['dasherizedPosition'],
-  classNames: ['tooltip-frost-popover'],
+
   propTypes: {
-    closest: PropTypes.bool,
     event: PropTypes.string,
-    excludePadding: PropTypes.bool,
-    index: PropTypes.number,
-    offset: PropTypes.number,
+    classes: PropTypes.string,
     position: PropTypes.string,
-    resize: PropTypes.bool,
-    viewport: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-      PropTypes.func
-    ])
+    remove: PropTypes.bool,
+    constrainToWindow: PropTypes.bool,
+    constrainToScrollParent: PropTypes.bool
   },
 
   getDefaultProps () {
     return {
-      closest: false,
       event: 'click',
-      excludePadding: false,
-      index: 0,
-      offset: 10,
+      classes: 'drop-theme-arrows-bounce',
       position: 'bottom center',
-      resize: true,
-      viewport: 'body',
-      visible: false,
+      remove: true,
+      constrainToWindow: true,
+      constrainToScrollParent: true
     }
   },
   didInsertElement () {
     this._super(...arguments)
-    const baseOptions = {
+
+    const dropOptions = {
       target: document.querySelector(this.get('target')),
       content: this.get('element'),
+      classes: this.get('classes'),
+      position: this.get('position'),
+      remove: this.get('remove'),
+      constrainToWindow: this.get('constrainToWindow'),
+      constrainToScrollParent: this.get('constrainToWindow'),
       openOn: this.get('event'),
-      remove: true
+      tetherOptions: {
+        constraints: [
+          {
+            to: 'scrollParent',
+            attachment: 'together',
+            pin: true
+          }
+        ]
+      }
     }
 
-    let [position, modifier] = this.get('position').split(' ')
-
-    const optionMap = {
-      bottom: ['center', 'left', 'right'],
-      top: ['center', 'left', 'right'],
-      left: ['middle', 'top', 'bottom'],
-      right: ['middle', 'top', 'bottom'],
-
-    }
-
-    if (!optionMap[position]) {
-      position = 'bottom'
-      baseOptions['contrainToWindow'] = true
-    }
-
-    if (!modifier) {
-      modifier = optionMap[position][0]
-    }
-    this.set('position', [position, modifier].join(' '))
-    const dropInstance = new Drop(
-      Object.assign(baseOptions, {
-        position: this.get('position'),
-        tetherOptions: {
-        }
-      })
-    )
-    dropInstance.on('open', function () {
-      console.log(this)
+    const dropInstance = new Drop(dropOptions)
+    dropInstance.on('open', () => {
+      const onOpen = this.get('onOpen')
+      if (onOpen) {
+        onOpen(this)
+      }
+    })
+    dropInstance.on('close', () => {
+      const onClose = this.get('onClose')
+      if (onClose) {
+        onClose(this)
+      }
     })
     this.set('dropInstance', dropInstance)
   },
+
   willDestroy () {
-    this.get('dropInstance').destroy()
+    const dropInstance = this.get('dropInstance')
+    dropInstance.destroy()
     this._super(...arguments)
-  },
-  dasherizedPosition: computed('position', function () {
-    return dasherize(this.get('position'))
-  }),
-  actions: {
-    close (action) {
-      if (this.get('isDestroyed') || this.get('isDestroying')) {
-        return
-      }
-      this.set('visible', false)
-
-      if (typeOf(action) === 'function') {
-        action()
-      }
-    },
-    togglePopover () {
-
-    }
   }
 })
