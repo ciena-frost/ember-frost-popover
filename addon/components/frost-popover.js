@@ -1,5 +1,5 @@
 import Ember from 'ember'
-const {$, Component, run, typeOf, String: {dasherize}, computed} = Ember
+const {$, Component, run, typeOf, String: {dasherize}, computed, assert} = Ember
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 
 import layout from '../templates/components/frost-popover'
@@ -34,37 +34,49 @@ export default Component.extend(PropTypeMixin, {
       excludePadding: false,
       index: 0,
       offset: 10,
-      position: 'bottom right',
+      position: 'bottom center',
       resize: true,
       viewport: 'body',
       visible: false,
     }
   },
-  init () {
-    this._super(...arguments)
-    const position = this.get('position')
-    const validPositions = {
-      'bottom': 'bottom center',
-      'top': 'top center',
-      'right': 'right middle',
-      'left': 'left middle',
-    }
-    this.set('position', validPositions[position] || position)
-  },
   didInsertElement () {
     this._super(...arguments)
-    const target = this.get('target')
-    const targetSelector = document.querySelector(target)
+    const baseOptions = {
+      target: document.querySelector(this.get('target')),
+      content: this.get('element'),
+      openOn: this.get('event'),
+      remove: true
+    }
 
-    const content = this.get('element')
-    const position = this.get('position')
+    let [position, modifier] = this.get('position').split(' ')
 
-    const openOn = this.get('event')
-    const dropInstance = new Drop({
-      target: targetSelector,
-      content,
-      position,
-      openOn
+    const optionMap = {
+      bottom: ['center', 'left', 'right'],
+      top: ['center', 'left', 'right'],
+      left: ['middle', 'top', 'bottom'],
+      right: ['middle', 'top', 'bottom'],
+
+    }
+
+    if (!optionMap[position]) {
+      position = 'bottom'
+      baseOptions['contrainToWindow'] = true
+    }
+
+    if (!modifier) {
+      modifier = optionMap[position][0]
+    }
+    this.set('position', [position, modifier].join(' '))
+    const dropInstance = new Drop(
+      Object.assign(baseOptions, {
+        position: this.get('position'),
+        tetherOptions: {
+        }
+      })
+    )
+    dropInstance.on('open', function () {
+      console.log(this)
     })
     this.set('dropInstance', dropInstance)
   },

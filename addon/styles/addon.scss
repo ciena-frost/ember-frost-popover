@@ -31,7 +31,7 @@ $tooltip-zindex: 999 !default;
   &.bottom-right,
   &.bottom-left,
   &.bottom-center {
-    margin-right: 5px;
+
     .tooltip-arrow {
       top: -1px;
       left: 50%;
@@ -43,7 +43,6 @@ $tooltip-zindex: 999 !default;
   &.right-middle,
   &.right-top,
   &.right-bottom {
-    margin-left: 5px;
 
     .tooltip-arrow {
       top: 50%;
@@ -56,7 +55,7 @@ $tooltip-zindex: 999 !default;
   &.top-center,
   &.top-left,
   &.top-right {
-    margin-bottom: 5px;
+
     .tooltip-arrow {
       bottom: -1px;
       left: 50%;
@@ -68,7 +67,6 @@ $tooltip-zindex: 999 !default;
   &.left-middle,
   &.left-top,
   &.left-bottom {
-    margin-top: 5px;
 
     .tooltip-arrow {
       top: 50%;
