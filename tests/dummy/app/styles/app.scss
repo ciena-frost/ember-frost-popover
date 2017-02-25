@@ -9,10 +9,15 @@
   max-width: 400px;
   margin: auto;
 }
-
-.dummy-content {
-  position: relative;
-  padding: 10px;
+.dummy {
+  &-body {
+    display: flex;
+    justify-content: center;
+  }
+  &-content {
+    position: relative;
+    padding: 10px;
+  }
 }
 
 .close {
