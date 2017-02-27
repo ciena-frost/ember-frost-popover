@@ -1,58 +1,97 @@
-<h2>DOM Placements</h2>
 <h2>Positions</h2>
-
 <!-- Top -->
 {{#frost-button hook='topButton' size='small' priority='primary' class='button-top' text='Top'}}
-  {{#frost-popover hook='topButton-popover' target='.button-top' closest=true position='top'}}
+  {{#frost-popover hook='topButton-popover' target='.button-top' position='top'}}
     <span class='inside'>Tooltip is showing above the target</span>
   {{/frost-popover}}
 {{/frost-button}}
 <!-- Top Right -->
 {{#frost-button hook='topButton' size='small' priority='primary' class='button-top-right' text='Top right'}}
-  {{#frost-popover hook='topButtonRight-popover' target='.button-top-right' closest=true position='top right'}}
+  {{#frost-popover hook='topButtonRight-popover' target='.button-top-right' position='top right'}}
     <span class='inside'>Tooltip is showing above the target</span>
   {{/frost-popover}}
 {{/frost-button}}
 <!-- Top Left -->
 {{#frost-button hook='topButton' size='small' priority='primary' class='button-top-left' text='Top left'}}
-  {{#frost-popover hook='topButtonRight-popover' target='.button-top-left' closest=true position='top left'}}
+  {{#frost-popover hook='topButtonRight-popover' target='.button-top-left' position='top left'}}
     <span class='inside'>Tooltip is showing above the target</span>
   {{/frost-popover}}
 {{/frost-button}}
-<!-- Right -->
-{{#frost-button hook='rightButton' size='small' priority='primary' class='button-right' text='Right'}}
-  {{#frost-popover hook='rightButton-popover' target='.button-right' closest=true position='right'}}
-    <span class='inside'>Tooltip is showing to the right of the target</span>
+<!-- Bottom Right -->
+{{#frost-button hook='bottomRight' size='small' priority='primary' class='button-bottom-right' text='Bottom Right'}}
+  {{#frost-popover hook='bottomRight-popover' target='.button-bottom-right' position='bottom right'}}
+    <span class='inside'>Tooltip is showing to the bottom left of the target</span>
   {{/frost-popover}}
 {{/frost-button}}
-<!-- Right Top -->
-{{#frost-button hook='rightButton' size='small' priority='primary' class='button-right-top' text='Right top'}}
-  {{#frost-popover hook='rightButton-popover' target='.button-right-top' closest=true position='right top'}}
-    <span class='inside'>Tooltip is showing to the right of the target</span>
+
+<!-- Bottom Left -->
+{{#frost-button hook='bottomLeft' size='small' priority='primary' class='button-bottom-left' text='Bottom Left'}}
+  {{#frost-popover hook='bottomLeft-popover' target='.button-bottom-left' position='bottom left'}}
+    <span class='inside'>Tooltip is showing to the bottom left of the target</span>
   {{/frost-popover}}
 {{/frost-button}}
+
 <!-- Bottom -->
 {{#frost-button hook='bottomButton' size='small' priority='primary' class='button-bottom' text='Bottom'}}
-  {{#frost-popover hook='buttomBottom-popover' target='.button-bottom' closest=true position='bottom'}}
+  {{#frost-popover hook='buttomBottom-popover' target='.button-bottom' position='bottom'}}
     <span class='inside'>Tooltip is showing below the target</span>
   {{/frost-popover}}
 {{/frost-button}}
 <!-- Left -->
 {{#frost-button hook='leftButton' size='small' priority='primary' class='button-left' text='Left'}}
-  {{#frost-popover hook='leftButton-popover' target='.button-left' closest=true position='left'}}
+  {{#frost-popover hook='leftButton-popover' target='.button-left' position='left'}}
     <span class='inside'>Tooltip is showing to the left of the target</span>
+  {{/frost-popover}}
+{{/frost-button}}
+<!-- Right -->
+{{#frost-button hook='rightButton' size='small' priority='primary' class='button-right' text='Right'}}
+  {{#frost-popover hook='rightButton-popover' target='.button-right' position='right'}}
+    <span class='inside'>Tooltip is showing to the right of the target</span>
   {{/frost-popover}}
 {{/frost-button}}
 
 <h2>Activating Event</h2>
+
 {{#frost-button hook='mouseEnterButton' size='small' priority='primary' class='event-mouse' text='onHover'}}
-  {{#frost-popover hook='mouseEnterButton-popover' target='.event-mouse' closest=true event='hover'}}
+  {{#frost-popover hook='mouseEnterButton-popover' target='.event-mouse' event='hover'}}
     <span class='inside'>Tooltip is toggled on mouse enter and mouse leave</span>
   {{/frost-popover}}
 {{/frost-button}}
 
-{{#frost-button hook='clickButton' size='small' priority='primary' class='event-click' text='onClick'}}
-  {{#frost-popover hook='clickButton-popover' target='.event-click' closest=true event='click'}}
-    <span class='inside'>tooltip is toggled on click</span>
-  {{/frost-popover}}
-{{/frost-button}}
+{{frost-button hook='clickButton' size='small' priority='primary' class='event-click' text='onClick'}}
+{{#frost-popover hook='clickButton-popover' target='.event-click' position='right' event='click'}}
+  <span class='inside'>tooltip is toggled on click</span>
+{{/frost-popover}}
+
+{{frost-button hook='focusButton' size='small' priority='primary' class='event-focus' text='onFocus'}}
+{{#frost-popover hook='focusButton-popover' target='.event-focus' position='right' event='focus'}}
+  <span class='inside'>tooltip is toggled on focus</span>
+{{/frost-popover}}
+
+<h2>Custom Close</h2>
+
+{{frost-button
+  hook='customClose'
+  size='small'
+  priority='primary'
+  class='custom-close'
+  text='Custom Close'
+}}
+{{#frost-popover
+  hook='customClose-popover'
+  target='.custom-close'
+  onBeforeClose=(action 'shouldClose')
+  offset='10px 0'
+  as |close|
+}}
+  Custom Close
+  <div class='close-button'>
+    {{frost-button
+      hook='closeButton'
+      priority='primary'
+      size='small'
+      text='Close'
+      onClick=close
+    }}
+  </div>
+{{/frost-popover}}

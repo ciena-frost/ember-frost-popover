@@ -45,54 +45,19 @@ ember install ember-frost-popover
 
 | Interface | Attributes | Value | Description |
 | ----------| ---------- | ----- | ----------- |
-| Action | `close` | | Close the popover and optionally fire an external action |
-| Option | `offset` | | The amount in pixels the popover should appear from the target (defaults to `10`) |
-| Option | `position` | `top`,`right`,`bottom`,`left`, `auto`| The location of the popover relative to the target. When `auto` is specified, it will dynamically reorient the popover. For example, if position is `auto left`, the popover will display to the left when possible, otherwise it will display right. (defaults to `bottom`) |
-| Option | `closest` | boolean  | When true uses JQuery's [closest function](https://api.jquery.com/closest/). Otherwise just uses main selector `$(<target>)` (defaults to `false`).  |
-| Option | `excludePadding` | boolean  | When true removes the padding from position calculations (defaults to `false`).|
-| Option | `event` |  | The event that will trigger the popover (defaults to on `click`). Uses [on()](http://api.jquery.com/on/)|
-| Option | `target` |  | The selector string of the target that activates the popover |
-| Option | `viewport`| | The selector for the viewport. Defaults to 'body' |
-| Option | `resize` | | If set to false, will prevent the browser from resizing at the edges of the viewport. This preserves the *expand to fit content* behavior of `width: auto`. It defaults to true. |
+| Required | `target` |  | The selector string of the target that activates the popover |
+| Action | `close` | | Close the popover and optionally fire an external action|
+| Event | `onOpen`| | Fires whenever the popover is opened|
+| Event | `onClose` | | Fires whenever the popover has been closed
+| Event | `onBeforeClose` | | Function that is run before closing the drop. If the function returns `false`, the closing of the drop will be prevented. Useful if you only want to programmatically close the drop. |
+| Option | `className` | `drop-theme-arrows-bounce` | CSS Naming Prefix to Popover Elements|
+| Option | `offset` | `<offsetTop>  <offsetRight>`. Example:  `0 10px` | The amount in pixels the popover should appear from the target (defaults to `0 0`) |
+| Option | `position` | `top left`, `left top`, `left`, `left bottom`, `bottom left`, `bottom`, `bottom right`, `right bottom`, `right`, `right top`, `top right`, `top` | The location of the popover relative to the target. When `auto` is specified, it will dynamically reorient the popover. For example, if position is `auto left`, the popover will display to the left when possible, otherwise it will display right. (defaults to `bottom`) |
+| Option | `event` | `click`, `hover`, `focus`, `always`| The event that will trigger the popover (defaults to on `click`)
+| Option | `constrainToWindow`| | If set to true, uses Tether's constraints list to flip the drop when it would otherwise be outside the viewport. |
+| Option | `constrainToScrollParent`| | Similar to `constrainToWindow` but for the target element's first scroll parent: the first parent that has `overflow: auto` or `overflow: scroll` set, or the body, whichever comes first.|
+| Option | `remove` | | Removes the popover from the DOM when closed (default true)|
 
-## Specifying Target
-
-If the `frost-popover` component is placed next to the `target`, be careful to use a selector that will uniquely identify the `target`. If it is nested inside the `target`, you can set `closest` to true which will search the nearest ancestor from the `popover`.
-
-### A Note On Positioning
-
-The `popover` is displayed using `absolute` positioning. The `target`'s coordinates are determined from the `offsets` from its parent's container. In most cases, the `target` will occupy the same stacking context as the `popover`. However, if the `target` has `absolute` positioning and the `popover` is nested, they won't share the same stacking context and the `popover`'s position will be erroneous. If the `target` must be `absolute`, then it's best to place the `popover` next to it.
-
-**template.hbs**
-
-```hbs
-{{#frost-button hook='popoverButton' size='small' priority='primary' class='button'}}
-  <div class='text'>Target</div>
-  {{#frost-popover target='.button' closest=true offset=10 position='bottom' as |close|}}
-    Popover content
-    {{#frost-button hook='closeButton' size="small" priority="tertiary" onClick=(action close)}}
-      <div class="text">Close</div>
-    {{/frost-button}}
-  {{/frost-popover}}
-{{/frost-button}}
-
-<div class='target'>
-frost-popover testbed
-</div>
-{{#frost-popover target='.target'}}
-  <span class='inside'>Inside Popover</span>
-{{/frost-popover}}
-
-
-<div class='lefty'>
-left testbed 5
-{{#frost-popover target='.lefty' closest=true position='right' excludePadding=true event='mouseenter mouseleave'}}
-  <span class='inside'>On Hover</span>
-{{/frost-popover}}
-</div>
-```
-
-## Development
 ### Setup
 ```
 git clone git@github.com:ciena-frost/ember-frost-popover.git

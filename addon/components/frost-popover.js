@@ -1,13 +1,14 @@
 import Ember from 'ember'
-const {$, run, get, getProperties: getProps, setProperties: setProps} = Ember
+const {
+  $,
+  run,
+  assert,
+  getProperties: getProps,
+  setProperties: setProps
+} = Ember
 import {PropTypes} from 'ember-prop-types'
 import {Component} from 'ember-frost-core'
-import Utils, {
-  checkLeft,
-  checkRight,
-  checkTop,
-  checkBottom
-} from './util'
+import Utils from './util'
 import layout from '../templates/components/frost-popover'
 
 export default Component.extend({
@@ -15,52 +16,66 @@ export default Component.extend({
   layout,
   // ==== Properties =========================================
   propTypes: {
+    target: PropTypes.string.isRequired,
+    offset: PropTypes.string,
     event: PropTypes.string,
-    classes: PropTypes.string,
+    className: PropTypes.string,
     position: PropTypes.string,
     remove: PropTypes.bool,
     constrainToWindow: PropTypes.bool,
     constrainToScrollParent: PropTypes.bool,
-    withinBounds: PropTypes.bool
+    onOpen: PropTypes.func,
+    onClose: PropTypes.func,
+    onBeforeClose: PropTypes.func
   },
 
   getDefaultProps () {
     return {
       event: 'click',
-      classes: 'drop-theme-arrows-bounce',
-      position: 'bottom',
+      className: 'drop-theme-arrows-bounce',
+      position: 'auto',
       remove: true,
+      autoPosition: false,
       constrainToWindow: true,
-      constrainToScrollParent: true,
-      autoposition: true
+      constrainToScrollParent: false,
+      offset: '0 0'
     }
   },
   // ==== Lifecycle Hooks =========================================
   didInsertElement () {
     this._super(...arguments)
-    const position = Utils.parsePosition(this.get('position'))
-    const auto = this.get('autoposition')
-    const constraints = []
 
-    // if (auto) {
-    //   constraints.push({
-    //     to: 'scrollParent',
-    //     attachment: 'together',
-    //     pin: true
-    //   })
-    // }
+    const position = this.get('position')
+    const auto = this.get('autoPosition')
+
+    const parsedPosition = Utils.parsePosition(position)
+
+    const beforeClose = run.bind(this, function () {
+      if (this.get('_wasForceClosed')) {
+        this.set('_wasForceClosed', false)
+        return true
+      }
+
+      const beforeClose = this.get('onBeforeClose')
+      if (beforeClose) {
+        return beforeClose(this.get('dropInstance'))
+      }
+      return true
+    })
+
     const dropOptions = {
       target: document.querySelector(this.get('target')),
       content: this.get('element'),
-      classes: this.get('classes'),
+      classes: this.get('className'),
       remove: this.get('remove'),
       constrainToWindow: this.get('constrainToWindow'),
-      constrainToScrollParent: this.get('constrainToWindow'),
+      constrainToScrollParent: this.get('constrainToScrollParent'),
       openOn: this.get('event'),
+      beforeClose,
       tetherOptions: {
-        attachment: position.attachment,
-        targetAttachment: position.targetAttachment,
-        constraints
+        attachment: parsedPosition.attachment,
+        targetAttachment: parsedPosition.targetAttachment,
+        targetOffset: this.get('offset')
       }
     }
 
@@ -74,17 +89,15 @@ export default Component.extend({
       }
 
       if (onOpen) {
-        onOpen(this)
+        onOpen(this.get('dropInstance'))
       }
       run.end()
     })
     dropInstance.on('close', () => {
-      run.begin()
       const onClose = this.get('onClose')
       if (onClose) {
-        onClose(this)
+        onClose(this.get('dropInstance'))
       }
-      run.end()
     })
 
     $(dropOptions.target)
@@ -96,12 +109,6 @@ export default Component.extend({
         .focus()
       return true
     })
-    if (auto) {
-      $(window).resize(() => {
-        this.calibrate()
-      })
-    }
-
     this.set('dropInstance', dropInstance)
   },
   willDestroy () {
@@ -112,20 +119,18 @@ export default Component.extend({
   // ==== Functions =======================================
   calibrate () {
     const el = this.get('dropInstance')
-    const computedStyle = getComputedStyle(get(el, 'drop'))
-
-    const [xPos, yPos] = computedStyle.getPropertyValue('transform')
-      .replace(/\((.*?)\)/, '$1')
-      .split(',')
+    const regex = /translateX\((.*)px\) translateY\((.*)px\) translateZ\((.*)\)/g
+    const [xPos, yPos] = el.drop.style.transform
+      .replace(regex, '$1 $2')
+      .split(' ')
       .map(Number)
-      .slice(-2)
 
     const originalSettings = getProps(
       el.tether,
       'attachment',
       'targetAttachment'
     )
-    const orientation = Utils.findRoom(xPos, yPos, el.drop) || this.get('position')
+    const orientation = Utils.findRoom(xPos, yPos, el.drop, this.get('position'))
 
     const {
       attachment,
@@ -150,4 +155,19 @@ export default Component.extend({
   },
 
   // ==== Actions =========================================
+  actions: {
+    close () {
+      const dropInstance = this.get('dropInstance')
+      this.set('_wasForceClosed', true)
+      dropInstance.close()
+    },
+    open () {
+      const dropInstance = this.get('dropInstance')
+      dropInstance.open()
+    },
+    toggle () {
+      const dropInstance = this.get('dropInstance')
+      dropInstance.open()
+    }
+  }
 })

@@ -1,64 +1,6 @@
 import Ember from 'ember'
 const {assert} = Ember
-/**
- * Checks if the popover can be positioned on the left
- * @param {Rect} elementPosition - the element client rect
- * @param {Rect} popoverRect - the popover client rect
- * @param {Number} offset - the amount of offset requested
- * @param {String} result - the current position
- * @returns {String} the new result
- */
-export function checkLeft (elementPosition, popoverRect, offset, result) {
-  if (elementPosition.left > 0 + popoverRect.width + offset) {
-    result = 'left'
-  }
-  return result
-}
 
-/**
- * Checks if the popover can be positioned on the right
- * @param {Rect} elementPosition - the element client rect
- * @param {Rect} popoverRect - the popover client rect
- * @param {Number} offset - the amount of offset requested
- * @param {String} result - the current position
- * @returns {String} the new result
- */
-export function checkRight (elementPosition, popoverRect, offset, result) {
-  if (elementPosition.left < 0 + popoverRect.width + offset) {
-    result = 'right'
-  }
-  return result
-}
-
-/**
- * Checks if the popover can be positioned on the top
- * @param {Rect} elementPosition - the element client rect
- * @param {Rect} popoverRect - the popover client rect
- * @param {Number} offset - the amount of offset requested
- * @param {String} result - the current position
- * @returns {String} the new result
- */
-export function checkTop (elementPosition, popoverRect, offset, result) {
-  if (elementPosition.top > 0 + popoverRect.height + offset) {
-    result = 'top'
-  }
-  return result
-}
-
-/**
- * Checks if the popover can be positioned on the bottom
- * @param {Rect} elementPosition - the element client rect
- * @param {Rect} popoverRect - the popover client rect
- * @param {Number} offset - the amount of offset requested
- * @param {String} result - the current position
- * @returns {String} the new result
- */
-export function checkBottom (elementPosition, popoverRect, offset, result) {
-  if (elementPosition.top < 0 + popoverRect.height + offset) {
-    result = 'bottom'
-  }
-  return result
-}
 export default {
   positionMap: {
     'left': {
@@ -120,20 +62,53 @@ export default {
       attachment: 'top right',
       targetAttachment: 'bottom right',
       inverse: 'top right'
+    },
+    'auto': {
+      attachment: 'top center',
+      targetAttachment: 'bottom center'
     }
   },
   parsePosition (position) {
     const url = "https://github.com/ciena-frost/ember-frost-popover/blob/master/README.md#placement"
+
     assert(`
       ${position} is an invalid position.
       See ${url} for available options...
     `, position = this.positionMap[position])
     return position
   },
-  findRoom (x, y, el) {
-    if (x < 0)
-      return 'right'
-    if (x + $(el).width() > window.innerWidth)
+  findRoom (x, y, el, position) {
+    el = $(el)
+    if (x + el.width() > window.innerWidth) {
+      if (y + el.height() > window.innerHeight)
+        return 'left top'
+      else if (y < 0)
+        return 'left bottom'
       return 'left'
+    }
+    else if (x < 0) {
+      if (y + el.height() > window.innerHeight)
+        return 'right bottom'
+      else if (y < 0)
+        return 'right top'
+      return 'right'
+    }
+    // Y doesn't fit bottom
+    if (y + el.height() > window.innerHeight) {
+      if (x + el.width() > window.innerWidth)
+        return 'top left'
+      else if (x < 0)
+        return 'top right'
+      return 'top'
+    }
+    // y doesn't fit at top
+    else if (y < 0) {
+      if (x + el.width() > window.innerWidth)
+        return 'bottom left'
+      else if (x < 0)
+        return 'bottom right'
+      return 'bottom'
+    }
+    return position
   }
 }

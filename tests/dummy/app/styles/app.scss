@@ -11,6 +11,7 @@
 }
 .dummy {
   &-body {
+    height: 1000px;
     display: flex;
     justify-content: center;
   }
@@ -20,42 +21,11 @@
   }
 }
 
-.close {
-  margin-right: 92%;
-  padding: 10px 0;
+.close-button {
+  display: flex;
+  justify-content: center;
 }
 
 .resize-on, .resize-off {
   margin: 10px 75px;
-}
-
-.viewport {
-  position: relative;
-  border: 1px solid black;
-  width: 400px;
-  height: 400px;
-
-  .viewport-left {
-    position: absolute;
-    top: 50%;
-    left: 0;
-  }
-
-  .viewport-right {
-    position: absolute;
-    top: 50%;
-    right: 0;
-  }
-
-  .viewport-top {
-    position: absolute;
-    top: 0;
-    left: 50%;
-  }
-
-  .viewport-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-  }
 }

@@ -1,11 +1,10 @@
 import {expect} from 'chai'
 import Ember from 'ember'
-const {$, run} = Ember
+const {$, run: {next, later}} = Ember
 import hbs from 'htmlbars-inline-precompile'
 import {describe, it} from 'mocha'
 
 import {integration} from 'dummy/tests/helpers/ember-test-utils/setup-component-test'
-
 const test = integration('frost-popover')
 describe(test.label, function () {
   test.setup()
@@ -15,7 +14,10 @@ describe(test.label, function () {
       <div class='target'>
         frost-popover testbed
       </div>
-      {{#frost-popover target='.target'}}
+      {{#frost-popover
+        hook='rendersTest'
+        target='.target'
+      }}
         <span class='inside'>Inside</span>
       {{/frost-popover}}
     `)
@@ -23,23 +25,22 @@ describe(test.label, function () {
   })
 
   it('clicks', function (done) {
-    this.timeout(5000)
     this.render(hbs`
       <div id='foo' class='target'>
         click test
       </div>
-      {{#frost-popover target='#foo'}}
+      {{#frost-popover hook='clickTest' target='#foo'}}
         <span class='inside'>Inside</span>
       {{/frost-popover}}
     `)
-    run.later(function () {
+    next(function () {
       $('#foo').click()
 
-      run.later(function () {
-        expect($('.visible')).to.have.length(1)
+      next(function () {
+        expect($('.drop-content')).to.have.length(1)
         done()
-      }, 100)
-    }, 100)
+      })
+    })
   })
 
   it('constrains to the viewport', function (done) {
@@ -48,22 +49,135 @@ describe(test.label, function () {
         <span id='viewport-test'>
           viewport test
         </span>
-        {{#frost-popover target='#viewport-test' viewport='#viewport' position='bottom'}}
+        {{#frost-popover
+          hook='constrainsToViewport'
+          target='#viewport-test'
+          constrainToScrollParent=true
+          position='bottom'
+        }}
           <span class='inside' style='display: inline-block; width: 100px'>Inside</span>
         {{/frost-popover}}
       </div>
     `)
 
-    run.later(function () {
+    next(function () {
       $('#viewport-test').click()
-      run.later(function () {
-        const viewportRect = $('#viewport')[0].getBoundingClientRect()
-        const popoverRect = $('.tooltip-frost-popover')[0].getBoundingClientRect()
+      next(function () {
+        const viewportRect = document.querySelector('#viewport').getBoundingClientRect()
+        const popoverRect = document.querySelector('.drop-content').getBoundingClientRect()
 
-        expect($('.visible')).to.have.length(1)
+        expect($('.drop-content')).to.have.length(1)
         expect(popoverRect.left >= viewportRect.left).to.equal(true)
         done()
-      }, 100)
-    }, 100)
+      })
+    })
+  })
+  it('calls onBeforeClose when closed', function (done) {
+    const onBeforeClose = sinon.spy()
+    this.setProperties({
+      onBeforeClose
+    })
+    this.render(hbs`
+      <span id='before-close'>
+        viewport test
+      </span>
+      {{frost-popover
+        hook='onBeforeClose'
+        target='#before-close'
+        onBeforeClose=onBeforeClose
+        position='bottom'
+      }}
+    `)
+    next(() => {
+      $('#before-close')
+        .click()
+        .blur()
+      next(() => {
+        expect(onBeforeClose.called).to.equal(true)
+        done()
+      })
+    })
+  })
+  it('calls onOpen when opened', function (done) {
+    const onOpen = sinon.spy()
+    this.setProperties({
+      onOpen
+    })
+    this.render(hbs`
+      <span id='on-open'>
+        viewport test
+      </span>
+      {{frost-popover
+        hook='onOpen'
+        target='#on-open'
+        onOpen=onOpen
+        position='bottom'
+      }}
+    `)
+    next(() => {
+      $('#on-open').click()
+      next(() => {
+        expect(onOpen.called).to.equal(true)
+        done()
+      })
+    })
+  })
+  it('calls onClose when closed', function (done) {
+    const onClose = sinon.spy()
+    this.setProperties({
+      onClose
+    })
+    this.render(hbs`
+      <span id='on-close'>
+        viewport test
+      </span>
+      {{frost-popover
+        hook='onClose'
+        target='#on-close'
+        onClose=onClose
+        position='bottom'
+      }}
+    `)
+    next(() => {
+      $('#on-close')
+        .click()
+        .blur()
+      next(() => {
+        expect(onClose.called).to.equal(true)
+        done()
+      })
+    })
+  })
+  it('does not fire onClose when onBeforeClose returns false', function (done) {
+    const onBeforeClose = sinon.spy(() => {
+      return false
+    })
+    const onClose = sinon.spy()
+    this.setProperties({
+      onBeforeClose,
+      onClose
+    })
+    this.render(hbs`
+      <span id='on-close'>
+        viewport test
+      </span>
+      {{frost-popover
+        hook='onClose'
+        target='#on-close'
+        onBeforeClose=onBeforeClose
+        onClose=onClose
+        position='bottom'
+      }}
+    `)
+    next(() => {
+      $('#on-close')
+        .click()
+        .blur()
+      next(() => {
+        expect(onBeforeClose.called).to.equal(true)
+        expect(onClose.called).to.equal(false)
+        done()
+      })
+    })
   })
 })
