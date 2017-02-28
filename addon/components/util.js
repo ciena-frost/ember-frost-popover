@@ -69,46 +69,12 @@ export default {
     }
   },
   parsePosition (position) {
-    const url = "https://github.com/ciena-frost/ember-frost-popover/blob/master/README.md#placement"
+    const url = 'https://github.com/ciena-frost/ember-frost-popover/blob/master/README.md#placement'
 
     assert(`
       ${position} is an invalid position.
       See ${url} for available options...
     `, position = this.positionMap[position])
-    return position
-  },
-  findRoom (x, y, el, position) {
-    el = $(el)
-    if (x + el.width() > window.innerWidth) {
-      if (y + el.height() > window.innerHeight)
-        return 'left top'
-      else if (y < 0)
-        return 'left bottom'
-      return 'left'
-    }
-    else if (x < 0) {
-      if (y + el.height() > window.innerHeight)
-        return 'right bottom'
-      else if (y < 0)
-        return 'right top'
-      return 'right'
-    }
-    // Y doesn't fit bottom
-    if (y + el.height() > window.innerHeight) {
-      if (x + el.width() > window.innerWidth)
-        return 'top left'
-      else if (x < 0)
-        return 'top right'
-      return 'top'
-    }
-    // y doesn't fit at top
-    else if (y < 0) {
-      if (x + el.width() > window.innerWidth)
-        return 'bottom left'
-      else if (x < 0)
-        return 'bottom right'
-      return 'bottom'
-    }
     return position
   }
 }

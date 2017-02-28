@@ -1,15 +1,18 @@
 import Ember from 'ember'
 const {
   $,
-  run,
-  assert,
   getProperties: getProps,
+  run,
   setProperties: setProps
 } = Ember
-import {PropTypes} from 'ember-prop-types'
 import {Component} from 'ember-frost-core'
-import Utils from './util'
+import {PropTypes} from 'ember-prop-types'
 import layout from '../templates/components/frost-popover'
+import Utils from './util'
+
+const {
+  Drop
+} = window
 
 export default Component.extend({
   // ==== Dependencies =======================================
@@ -35,9 +38,8 @@ export default Component.extend({
       className: 'drop-theme-arrows-bounce',
       position: 'auto',
       remove: true,
-      autoPosition: false,
       constrainToWindow: true,
-      constrainToScrollParent: false,
+      constrainToScrollParent: true,
       offset: '0 0'
     }
   },
@@ -46,7 +48,29 @@ export default Component.extend({
     this._super(...arguments)
 
     const position = this.get('position')
-    const auto = this.get('autoPosition')
+
+    const constraints = []
+
+    if (this.constrainToScrollParent) {
+      constraints.push({
+        to: 'scrollParent',
+        pin: 'top, bottom, left, right',
+        attachment: 'together none'
+      })
+    } else {
+      constraints.push({to: 'scrollParent'})
+    }
+
+    if (this.constrainToWindow) {
+      constraints.push({
+        to: 'window',
+        attachment: 'together'
+      })
+    } else {
+      constraints.push({
+        to: 'window'
+      })
+    }
 
     const parsedPosition = Utils.parsePosition(position)
 
@@ -75,7 +99,8 @@ export default Component.extend({
       tetherOptions: {
         attachment: parsedPosition.attachment,
         targetAttachment: parsedPosition.targetAttachment,
-        targetOffset: this.get('offset')
+        targetOffset: this.get('offset'),
+        constraints
       }
     }
 
@@ -83,10 +108,6 @@ export default Component.extend({
     dropInstance.on('open', () => {
       run.begin()
       const onOpen = this.get('onOpen')
-
-      if (auto) {
-        this.calibrate()
-      }
 
       if (onOpen) {
         onOpen(this.get('dropInstance'))
@@ -101,7 +122,7 @@ export default Component.extend({
     })
 
     $(dropOptions.target)
-      .blur(() => {dropInstance.close()})
+      .blur(() => { dropInstance.close() })
 
     $(dropOptions.content).click(function () {
       $(dropOptions.target)
@@ -112,9 +133,9 @@ export default Component.extend({
     this.set('dropInstance', dropInstance)
   },
   willDestroy () {
+    console.log(this._super)
     const dropInstance = this.get('dropInstance')
     dropInstance.destroy()
-    this._super(...arguments)
   },
   // ==== Functions =======================================
   calibrate () {
@@ -161,13 +182,8 @@ export default Component.extend({
       this.set('_wasForceClosed', true)
       dropInstance.close()
     },
-    open () {
-      const dropInstance = this.get('dropInstance')
-      dropInstance.open()
-    },
-    toggle () {
-      const dropInstance = this.get('dropInstance')
-      dropInstance.open()
+    destroy () {
+      this.destroy()
     }
   }
 })
