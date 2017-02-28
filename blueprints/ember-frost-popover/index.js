@@ -15,6 +15,6 @@ module.exports = {
       ]
     }).then(() => {
       return this.addBowerPackageToProject('tether-drop', '1.4.2')
-    }
+    })
   }
 }

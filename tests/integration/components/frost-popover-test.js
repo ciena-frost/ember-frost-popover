@@ -1,6 +1,7 @@
 import {expect} from 'chai'
 import Ember from 'ember'
-const {$, run: {next, later}} = Ember
+const {$, run: {next}} = Ember
+import sinon from 'ember-sinon'
 import hbs from 'htmlbars-inline-precompile'
 import {describe, it} from 'mocha'
 
