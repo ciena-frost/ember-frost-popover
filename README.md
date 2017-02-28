@@ -47,6 +47,7 @@ ember install ember-frost-popover
 | ----------| ---------- | ----- | ----------- |
 | Required | `target` |  | The selector string of the target that activates the popover |
 | Action | `close` | | Close the popover and optionally fire an external action|
+| Action | `destroy` | | Remove the popover from the DOM and remove listeners|
 | Event | `onOpen`| | Fires whenever the popover is opened|
 | Event | `onClose` | | Fires whenever the popover has been closed
 | Event | `onBeforeClose` | | Function that is run before closing the drop. If the function returns `false`, the closing of the drop will be prevented. Useful if you only want to programmatically close the drop. |
