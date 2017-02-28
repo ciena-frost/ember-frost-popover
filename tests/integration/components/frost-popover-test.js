@@ -1,9 +1,9 @@
 import {expect} from 'chai'
 import Ember from 'ember'
 const {$, run: {next}} = Ember
-import sinon from 'ember-sinon'
 import hbs from 'htmlbars-inline-precompile'
 import {describe, it} from 'mocha'
+import sinon from 'sinon'
 
 import {integration} from 'dummy/tests/helpers/ember-test-utils/setup-component-test'
 const test = integration('frost-popover')

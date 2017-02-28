@@ -133,7 +133,6 @@ export default Component.extend({
     this.set('dropInstance', dropInstance)
   },
   willDestroy () {
-    console.log(this._super)
     const dropInstance = this.get('dropInstance')
     dropInstance.destroy()
   },
