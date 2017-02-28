@@ -12,7 +12,6 @@ module.exports = function (defaults) {
   })
 
   app.import('bower_components/sinonjs/sinon.js')
-
   /*
     This build file specifes the options for the dummy test app of this
     addon, located in `/tests/dummy`
