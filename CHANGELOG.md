@@ -1,3 +1,6 @@
+# 4.2.3
+* **Updated** to use latest pr-bumper which supports being able to set a PR to `none` when publishing a new version is not desired.
+
 # 4.2.2
 * **Updated** integration and unit tests to remove the deprecated use of `describeComponent()`
 
