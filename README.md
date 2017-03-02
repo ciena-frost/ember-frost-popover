@@ -57,11 +57,17 @@ ember install ember-frost-popover
 
 ## Specifying Target
 
-If the `frost-popover` component is placed next to the `target`, be careful to use a selector that will uniquely identify the `target`. If it is nested inside the `target`, you can set `closest` to true which will search the nearest ancestor from the `popover`.
+If the `frost-popover` component is placed next to the `target`, be careful to use a selector that will uniquely
+identify the `target`. If it is nested inside the `target`, you can set `closest` to true which will search the
+nearest ancestor from the `popover`.
 
 ### A Note On Positioning
 
-The `popover` is displayed using `absolute` positioning. The `target`'s coordinates are determined from the `offsets` from its parent's container. In most cases, the `target` will occupy the same stacking context as the `popover`. However, if the `target` has `absolute` positioning and the `popover` is nested, they won't share the same stacking context and the `popover`'s position will be erroneous. If the `target` must be `absolute`, then it's best to place the `popover` next to it.
+The `popover` is displayed using `absolute` positioning. The `target`'s coordinates are determined from the `offsets`
+from its parent's container. In most cases, the `target` will occupy the same stacking context as the `popover`.
+However, if the `target` has `absolute` positioning and the `popover` is nested, they won't share the same stacking
+context and the `popover`'s position will be erroneous. If the `target` must be `absolute`, then it's best to place
+the `popover` next to it.
 
 **template.hbs**
 
