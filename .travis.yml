@@ -1,12 +1,11 @@
 sudo: required
 dist: trusty
 language: node_js
+
 node_js:
-- '6.9'
+- '6.9.1'
 - 'stable'
-branches:
-  except:
-  - /^v[0-9\.]+/
+
 addons:
   apt:
     sources:
@@ -15,27 +14,11 @@ addons:
     packages:
     - google-chrome-stable
     - g++-4.8
-before_install:
-- npm config set spin false
-- npm install -g coveralls pr-bumper
-- pr-bumper check
-before_script:
-- export CHROME_BIN=/usr/bin/google-chrome
-- "export DISPLAY=:99.0"
-- "sh -e /etc/init.d/xvfb start"
-- sleep 3 # give xvfb some time to start
-- sudo apt-get update
-- sudo apt-get install -y libappindicator1 fonts-liberation
-- wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-- sudo dpkg -i google-chrome*.deb
-script:
-- npm run lint
-- ember try:one $EMBER_TRY_SCENARIO --- ember tva --push-var='false' --msg-on=$EMBER_TRY_SCENARIO
-install:
-- npm install
-- bower install
-after_success:
-- .travis/publish-coverage.sh
+
+cache:
+  directories:
+  - node_modules
+
 env:
   matrix:
   - EMBER_TRY_SCENARIO=ember-2-3
@@ -45,12 +28,33 @@ env:
   global:
     - CXX=g++-4.8
     - secure: MJJcmMkBU2D/ffyF/bqfNcZMD6q7SteAKbAmojLlbXiQA1KjOq6rYBYK+ZzNGBjyiPubDWhmLzyQ0Hzc3gGGWRCKcKIOktPywJrq6SqhwtVi7hvbSGqDjKq22y2KO9r9RD/DIbL+d8CL0t5JA5Y0ISsZdl2+EpC4RcSQIb7QugLD188nOgiGuxcodMYqstnHS3LPQVnX875RqWp4dDQlkyHF+XY89b9TwMkR0cXNeV8F7hzceLOrOsJ6dWJ+Ig44aQ7gcp88z9uO56MCo2YfEdlAcx/zINNDKD3ZUTlSOlSe8Bf7dFo8nQire0arbfPvcM0gBFz653ewhGGhxm6Tx0u7+Gzi4tcFj/yqhHBf07AvBXBCMMtLXr5sCRyVJ5WAkmev3voXeX72pP0wIjZ5IHom6i4rlZC9lhmlPFIRdKVRnlJue0+BtC8UXI0lJaBQNojtLvZDqG9/RfH073OdJbglSH6Fvrhtv6wsNiPXgqwgIqiNFbzGUxiZ0ccnq97vqhZkMCINNGeHIP+xBozfEzkH7rXUAy67p5goXoMIUwOZZR1Dq7MIV5ZHrRBj0ze5yxPb4QHigZbJHq9rQczyRxSW3K8KY5/HOHk/iUstbcE3dlEqDe/R56J1QaZ2DWZrp/PpvxzlFDq5m90UTyAT7roRnJ8LgRIZGAKvwS9CRs8=
+
 matrix:
   fast_finish: true
   allow_failures:
   - env: EMBER_TRY_SCENARIO=ember-release
-before_deploy:
-- pr-bumper bump
+
+before_install:
+- npm config set spin false
+- npm install -g coveralls pr-bumper@^1.0.0
+- $(npm root -g)/pr-bumper/.travis/maybe-check-scope.sh
+
+install:
+- $(npm root -g)/pr-bumper/.travis/maybe-install.sh
+
+before_script:
+- "export DISPLAY=:99.0"
+- "sh -e /etc/init.d/xvfb start"
+- sleep 3 # give xvfb some time to start
+
+script:
+- $(npm root -g)/pr-bumper/.travis/maybe-test.sh
+- .travis/maybe-bump-version.sh
+
+after_success:
+- .travis/maybe-publish-coverage.sh
+- .travis/maybe-publish-gh-pages.sh
+
 deploy:
   provider: npm
   email: npm.ciena@gmail.com
@@ -58,12 +62,11 @@ deploy:
   api_key:
     secure: am+Hub34RRnMcvsjJtB1jFMnnC9U6bb7+vP0W2VRLvcCjJB1s3gUkICigbd6uqyZRTRY1cw5CktIwPKRLwpsbSZ/2Aowd5L5TmoLuNgMvAO/USeP+N/K33pKvL6UTv+473mniAiOFt0pZ62s0y40XJtEmqMXcozen3t3Zdha/JlgxbrhZ+uEVrkzxnjM31Syes56HgD8r37EpcY8xLGcIYOCWIkU8awUxp687upKsDvhtYytmsNo/fPQE6nPft412ytgWJxhpIqKykJfMOPTHtk0QbTyR13PwdM0/YHnvzwq1EHKZFBVtE9jSKouHlzIw2b2mE6YprD++yEayYY0NOIqda9SBSOAvNz1kympEmo3Raq6fdih0el1pT2Nk6qrAH1wwuE3ZuqWk4FIDBo/QyniwE3ZrCI2ZfSBnWE23AY+hdJ7wfrrbU+uEUCSDWR9aMetvLpq4rlCrbI9hvEZZNvTTkrHloJORyhlAW7r7ZGi2Fry5c4RFtBHihofTmdNdSj4dbCPh6I+FStxlh8YT7D0lHCJEScolpP4WIwJUwHMwgdNSZ7yKN+Ot2y1AyHlNKPWOmIMxrP62JsKYx2ipqSbIuAc4or/Uwfj1nmInjQKXJtVc2owvaozuR/vGm89J2rIZdRixYTcgbjBUvRGYbNMzb+5rGxNl5a9U+Vwd7g=
   on:
-    branch: master
+    all_branches: true
     condition: "$EMBER_TRY_SCENARIO = 'default'"
-    node: 'stable'
+    node: '6.9.1'
     tags: true
-after_deploy:
-- .travis/publish-gh-pages.sh
+
 notifications:
   slack:
     secure: bk/tBjTtLFLkQK1m4FY2F2fM8kTxmpuupaPk/Htq7tYR7CGnAdkFGiMUc78z3KboAH2j+Qna6//l+BGkfYZ9BiAhnMct6zLdSeeiU5a1Yi9My5GmLuREKQYG8LvAMwl3FQrGVYPOsu2HI5hI3EhHp/QuTKH5Iz4WB1gNwjJ86+8tsIKiTCKoaDizY1Ol491qYzDWFlNAjd4WDHyJQLcoommxM31SnBnS4PFbso03Yjx8qD9bSnYC5VknDTql52a0Vy1YTlhKgQxX8ABoqBWPNPRL8zwd8XySiYSushUcF+GmjKp1YCBIPkBv8146sIh9Rq7Wr6XmWjXp7wmVfamuhiqhBN8ZUs+wv/VtjuxGH2CjqX45xnBOVV3vDuIfB89PPSnznAmnQt0BqWXxcxpJnPMLIOY8QUgAJgq2ndpnq1va99QCMezkLPdzs4a7hTy36Xn7H24EkIHn9in9QAVeJe2ZrGFumyV8eHIXQxPrpP6nip9DfUrfH7X6zQ5WTKbgoL0WY/p5WjDvQQWQ4drnztzD/fUN9ylvMwSanlupasUlwjtur1LpgpNEXFBz+eZHVIT8gP0iZRs1bnB9pH+iXB27wOveWohloUTfIjbo7C+7osm73/0t4yx4lw2pq3PfzSAJkJY5WLkdLUP6Hjm0v5QuxambF+BZKKBhz1AImAw=
