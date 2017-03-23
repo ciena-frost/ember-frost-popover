@@ -1,3 +1,6 @@
+# 4.2.5 (2017-03-23)
+* **Fixed** `ember` and `ember-cli` dependencies
+
 # 4.2.4
 * **Updated** the travis.yml and package.json to run code coverage
 
