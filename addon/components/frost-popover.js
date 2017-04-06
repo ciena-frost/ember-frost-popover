@@ -43,19 +43,20 @@ export default Component.extend(PropTypeMixin, {
   },
 
   didInsertElement () {
-    run.next(() => {
-      const target = this.getTarget()
-      const event = this.get('event')
+    const target = this.getTarget()
+    const event = this.get('event')
 
-      this._eventHandler = (event) => {
-        const popover = this.get('element')
-        if ($(event.target).closest(popover).length === 0) {
-          this.send('togglePopover')
+    this._eventHandler = (event) => {
+      run.next(() => {
+        if (this.isDestroyed || this.isDestroying) {
+          return
         }
-      }
 
-      $(target).on(event, this._eventHandler)
-    })
+        this.togglePopover(event)
+      })
+    }
+
+    $(target).on(event, this._eventHandler)
   },
 
   willDestroyElement () {
@@ -65,15 +66,38 @@ export default Component.extend(PropTypeMixin, {
     this.unregisterClickOff()
   },
 
+  /**
+   * Toggles the popover
+   * @param {DOMEvent} event - click event
+   */
+  togglePopover (event) {
+    const popover = this.get('element')
+    if ($(event.target).closest(popover).length === 0) {
+      this.send('togglePopover')
+    }
+  },
+
+  /**
+   * Closes the popover an unregisters the global click event
+   * @param {DOMEvent} event - click event
+   */
+  closePopover (event) {
+    let popover = this.get('element')
+    if ($(event.target).closest(popover).length === 0) {
+      this.set('visible', false)
+      this.unregisterClickOff()
+    }
+  },
+
   registerClickOff () {
-    run.next(this, () => {
-      const elementId = this.get('elementId')
-      $('html').on(`click.container.${elementId}`, (event) => {
-        let popover = this.get('element')
-        if ($(event.target).closest(popover).length === 0) {
-          this.set('visible', false)
-          this.unregisterClickOff()
+    const elementId = this.get('elementId')
+    $('html').on(`click.container.${elementId}`, (event) => {
+      run.next(this, () => {
+        if (this.isDestroyed || this.isDestroying) {
+          return
         }
+
+        this.closePopover(event)
       })
     })
   },
