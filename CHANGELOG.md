@@ -1,3 +1,9 @@
+# 4.2.6 (2017-04-06)
+
+* **Fixed** guarded against `isDestroyed|isDestroying` so tests on fast machines don't fail
+* **Fixed** placement of run blocks so that async handlers are executed in a run block
+
+
 # 4.2.5 (2017-03-23)
 * **Fixed** `ember` and `ember-cli` dependencies
 
