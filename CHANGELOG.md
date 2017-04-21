@@ -1,3 +1,7 @@
+# 4.2.7 (2017-04-21)
+* **Added** blueprint check
+
+
 # 4.2.6 (2017-04-06)
 
 * **Fixed** guarded against `isDestroyed|isDestroying` so tests on fast machines don't fail
