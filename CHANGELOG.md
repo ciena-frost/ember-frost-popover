@@ -1,3 +1,7 @@
+# 4.2.9 (2017-05-10)
+* **Updated** secure auth token
+
+
 # 4.2.8 (2017-04-21)
 * **Removed** unecessary dependencies in blueprint
 
