@@ -1,3 +1,6 @@
+# 4.2.10 (2017-07-11)
+* Upgrade `ember-cli` to `2.12.3`
+
 # 4.2.9 (2017-05-10)
 * **Updated** secure auth token
 
