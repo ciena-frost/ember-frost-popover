@@ -1,3 +1,7 @@
+# 4.2.11 (2017-08-10)
+* **Updated** ember-cli 2.12.3 inter-dependencies
+* **Updated** pin `ember-cli-htmlbars-inline-precompile` per issue: https://github.com/ciena-frost/ember-frost-core/issues/488
+
 # 4.2.10 (2017-07-11)
 * Upgrade `ember-cli` to `2.12.3`
 
