@@ -18,7 +18,8 @@ export default Component.extend(PropTypeMixin, {
     excludePadding: PropTypes.bool,
     index: PropTypes.number,
     offset: PropTypes.number,
-    onToggle: PropTypes.func,
+    onDisplay: PropTypes.func,
+    onHide: PropTypes.func,
     position: PropTypes.string,
     resize: PropTypes.bool,
     viewport: PropTypes.oneOfType([
@@ -369,13 +370,13 @@ export default Component.extend(PropTypeMixin, {
           marginTop: -delta.top - arrowMargin
         })
 
-        if (isPresent(this.get('onToggle'))) {
-          this.get('onToggle')(this.get('visible'))
+        if (isPresent(this.get('onDisplay'))) {
+          this.get('onDisplay')()
         }
       } else {
         this.unregisterClickOff()
-        if (isPresent(this.get('onToggle'))) {
-          this.get('onToggle')(this.get('visible'))
+        if (isPresent(this.get('onHide'))) {
+          this.get('onHide')()
         }
       }
     }

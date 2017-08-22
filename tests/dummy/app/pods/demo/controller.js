@@ -3,9 +3,11 @@ const {$, Controller} = Ember
 
 export default Controller.extend({
   actions: {
-    onToggle: function (toggle) {
-      const text = toggle ? 'Toggle is on' : 'Toggle is off'
-      $('.on-toggle-content').text(text)
+    onDisplay: function () {
+      $('.toggle-functions-content').text('A scary monster is terrorizing the village!!')
+    },
+    onHide: function () {
+      $('.toggle-functions-content').text('The scary monster has been vanquished!')
     }
   }
 })
