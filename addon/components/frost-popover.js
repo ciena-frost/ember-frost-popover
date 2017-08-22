@@ -1,5 +1,5 @@
 import Ember from 'ember'
-const {$, Component, run, typeOf} = Ember
+const {$, Component, isPresent, run, typeOf} = Ember
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 
 import layout from '../templates/components/frost-popover'
@@ -18,6 +18,8 @@ export default Component.extend(PropTypeMixin, {
     excludePadding: PropTypes.bool,
     index: PropTypes.number,
     offset: PropTypes.number,
+    onDisplay: PropTypes.func,
+    onHide: PropTypes.func,
     position: PropTypes.string,
     resize: PropTypes.bool,
     viewport: PropTypes.oneOfType([
@@ -367,8 +369,15 @@ export default Component.extend(PropTypeMixin, {
           marginLeft: -delta.left - arrowMargin,
           marginTop: -delta.top - arrowMargin
         })
+
+        if (isPresent(this.get('onDisplay'))) {
+          this.get('onDisplay')()
+        }
       } else {
         this.unregisterClickOff()
+        if (isPresent(this.get('onHide'))) {
+          this.get('onHide')()
+        }
       }
     }
   }

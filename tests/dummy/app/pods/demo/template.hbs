@@ -101,3 +101,12 @@
     <span class='inside'>Horizontal position allows veritcal shift</span>
   {{/frost-popover}}
 </div>
+
+<h2>Toggle functions</h2>
+<div class='toggle-functions'>
+  <div class='toggle-functions-content'>Content will appear here when clicked</div>
+  {{frost-button hook='toggle-functions-button' size='small' priority='primary' class='toggle-functions-button' text='Toggle action'}}
+  {{#frost-popover target='.toggle-functions-button' onDisplay=(action 'onDisplay') onHide=(action 'onHide')}}
+    <span class='toggle-content'>Scary monster! RAWRR!</span>
+  {{/frost-popover}}
+</div>
