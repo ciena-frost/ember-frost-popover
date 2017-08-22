@@ -1,5 +1,5 @@
 import Ember from 'ember'
-const {$, Component, run, isPresent, typeOf} = Ember
+const {$, Component, isPresent, run, typeOf} = Ember
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 
 import layout from '../templates/components/frost-popover'
@@ -18,14 +18,14 @@ export default Component.extend(PropTypeMixin, {
     excludePadding: PropTypes.bool,
     index: PropTypes.number,
     offset: PropTypes.number,
+    onToggle: PropTypes.func,
     position: PropTypes.string,
     resize: PropTypes.bool,
     viewport: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object,
       PropTypes.func
-    ]),
-    onToggle: PropTypes.func
+    ])
   },
 
   getDefaultProps () {
