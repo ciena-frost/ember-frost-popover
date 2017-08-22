@@ -1,5 +1,5 @@
 import Ember from 'ember'
-const {$, Component, run, typeOf} = Ember
+const {$, Component, run, isPresent, typeOf} = Ember
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 
 import layout from '../templates/components/frost-popover'
@@ -24,7 +24,8 @@ export default Component.extend(PropTypeMixin, {
       PropTypes.string,
       PropTypes.object,
       PropTypes.func
-    ])
+    ]),
+    onToggle: PropTypes.object
   },
 
   getDefaultProps () {
@@ -367,8 +368,15 @@ export default Component.extend(PropTypeMixin, {
           marginLeft: -delta.left - arrowMargin,
           marginTop: -delta.top - arrowMargin
         })
+
+        if (isPresent(this.get('onToggle'))) {
+          this.get('onToggle')(this.get('visible'))
+        }
       } else {
         this.unregisterClickOff()
+        if (isPresent(this.get('onToggle'))) {
+          this.get('onToggle')(this.get('visible'))
+        }
       }
     }
   }
