@@ -1,3 +1,8 @@
+# 4.2.12 (2017-08-22)
+* **Added** onDisplay function to be run after when the popover is made visible.
+* **Added** onHide function to be run after when the popover is no longer visible.
+
+
 # 4.2.11 (2017-08-10)
 * **Updated** ember-cli 2.12.3 inter-dependencies
 * **Updated** pin `ember-cli-htmlbars-inline-precompile` per issue: https://github.com/ciena-frost/ember-frost-core/issues/488
