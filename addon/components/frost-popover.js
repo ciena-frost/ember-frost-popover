@@ -25,7 +25,7 @@ export default Component.extend(PropTypeMixin, {
       PropTypes.object,
       PropTypes.func
     ]),
-    onToggle: PropTypes.object
+    onToggle: PropTypes.func
   },
 
   getDefaultProps () {

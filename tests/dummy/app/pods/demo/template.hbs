@@ -101,3 +101,12 @@
     <span class='inside'>Horizontal position allows veritcal shift</span>
   {{/frost-popover}}
 </div>
+
+<h2>onToggle</h2>
+<div class='on-toggle'>
+  <div class='on-toggle-content'>Toggle content will appear here when clicked</div>
+  {{frost-button hook='onToggle' size='small' priority='primary' class='on-toggle-button' text='Toggle function'}}
+  {{#frost-popover target='.on-toggle-button' onToggle=(action 'onToggle')}}
+    <span class='toggle-content'>The toggle text should be 'on'!</span>
+  {{/frost-popover}}
+</div>
