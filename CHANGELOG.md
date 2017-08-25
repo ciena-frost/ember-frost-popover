@@ -1,3 +1,7 @@
+# 4.2.13 (2017-08-25)
+* **Modified** onDisplay and onHide now pass the current object as a parameter
+
+
 # 4.2.12 (2017-08-22)
 * **Added** onDisplay function to be run after when the popover is made visible.
 * **Added** onHide function to be run after when the popover is no longer visible.
