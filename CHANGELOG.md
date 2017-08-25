@@ -1,3 +1,7 @@
+# 4.2.14 (2017-08-25)
+* **Changed** handling of display/hide
+
+
 # 4.2.13 (2017-08-25)
 * **Modified** onDisplay and onHide now pass the current object as a parameter
 
