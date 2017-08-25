@@ -266,6 +266,18 @@ export default Component.extend(PropTypeMixin, {
     return position
   },
 
+  handleDisplay () {
+    if (isPresent(this.get('onDisplay'))) {
+      this.onDisplay()
+    }
+  },
+
+  handleHide () {
+    if (isPresent(this.get('onHide'))) {
+      this.onHide()
+    }
+  },
+
 /* eslint-disable complexity */
   place () {
     let targetElement = this.getTarget()
@@ -370,14 +382,10 @@ export default Component.extend(PropTypeMixin, {
           marginTop: -delta.top - arrowMargin
         })
 
-        if (isPresent(this.get('onDisplay'))) {
-          this.get('onDisplay')(this)
-        }
+        this.handleDisplay()
       } else {
         this.unregisterClickOff()
-        if (isPresent(this.get('onHide'))) {
-          this.get('onHide')(this)
-        }
+        this.handleHide()
       }
     }
   }
