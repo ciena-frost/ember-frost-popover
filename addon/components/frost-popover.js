@@ -371,12 +371,12 @@ export default Component.extend(PropTypeMixin, {
         })
 
         if (isPresent(this.get('onDisplay'))) {
-          this.get('onDisplay')()
+          this.get('onDisplay')(this)
         }
       } else {
         this.unregisterClickOff()
         if (isPresent(this.get('onHide'))) {
-          this.get('onHide')()
+          this.get('onHide')(this)
         }
       }
     }
