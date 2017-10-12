@@ -42,6 +42,34 @@ describe(test.label, function () {
     }, 100)
   })
 
+  it('test handlerIn and handlerOut', function (done) {
+    this.timeout(5000)
+    this.render(hbs`
+      <div id='foo' class='target'>
+        click test
+      </div>
+      {{#frost-popover target='#foo' handlerIn='mouseenter' handlerOut='mouseleave'}}
+        <span class='inside'>Inside</span>
+      {{/frost-popover}}
+    `)
+    run.later(function () {
+      $('#foo').mouseenter()
+
+      run.later(function () {
+        expect($('.visible')).to.have.length(1)
+        $('#foo').mouseenter()
+        run.later(function () {
+          expect($('.visible')).to.have.length(1)
+          $('#foo').mouseleave()
+          run.later(function () {
+            expect($('.visible')).to.have.length(0)
+            done()
+          }, 100)
+        }, 100)
+      }, 100)
+    }, 100)
+  })
+
   it('constrains to the viewport', function (done) {
     this.render(hbs`
       <div id='viewport' style='width: 400px; height: 400px;'>
