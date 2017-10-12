@@ -50,14 +50,14 @@ export default Component.extend(PropTypeMixin, {
     const target = this.getTarget()
     const event = this.get('event')
     const handlerIn = this.get('handlerIn')
-    const handlerOut =this.get('handlerOut')
-    if (handlerIn && handlerOut){ 
+    const handlerOut = this.get('handlerOut')
+    if (handlerIn && handlerOut) {
       this._eventHandlerIn = (event) => {
         run.next(() => {
           if (this.isDestroyed || this.isDestroying) {
             return
           }
-          if (!this.get('visible')){
+          if (!this.get('visible')) {
             this.togglePopover(event)
           }
         })
@@ -67,24 +67,24 @@ export default Component.extend(PropTypeMixin, {
           if (this.isDestroyed || this.isDestroying) {
             return
           }
-          if (this.get('visible')){
+          if (this.get('visible')) {
             this.togglePopover(event)
           }
         })
       }
       $(target).on(handlerIn, this._eventHandlerIn)
       $(target).on(handlerOut, this._eventHandlerOut)
-    } else{
+    } else {
       this._eventHandler = (event) => {
         run.next(() => {
           if (this.isDestroyed || this.isDestroying) {
             return
           }
-  
+
           this.togglePopover(event)
         })
       }
-  
+
       $(target).on(event, this._eventHandler)
     }
   },
@@ -93,7 +93,7 @@ export default Component.extend(PropTypeMixin, {
     const target = this.getTarget()
     const event = this.get('event')
     const handlerIn = this.get('handlerIn')
-    const handlerOut =this.get('handlerOut')
+    const handlerOut = this.get('handlerOut')
     if (handlerIn && handlerOut) {
       $(target).off(handlerIn, this._eventHandlerIn)
       $(target).off(handlerOut, this._eventHandlerOut)

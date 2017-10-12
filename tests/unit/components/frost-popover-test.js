@@ -29,7 +29,7 @@ describe(test.label, function () {
     component.actions.close.apply(component, [forwardedAction])
     expect(callCounter).to.be.equal(1)
   })
-  describe('handlers In and Out', function(){
+  describe('handlers In and Out', function () {
     beforeEach(function () {
       sandbox.spy($.fn, 'on')
       sandbox.spy($.fn, 'off')
