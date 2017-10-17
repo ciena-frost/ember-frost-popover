@@ -51,6 +51,8 @@ ember install ember-frost-popover
 | Option | `closest` | boolean  | When true uses JQuery's [closest function](https://api.jquery.com/closest/). Otherwise just uses main selector `$(<target>)` (defaults to `false`).  |
 | Option | `excludePadding` | boolean  | When true removes the padding from position calculations (defaults to `false`).|
 | Option | `event` |  | The event that will trigger the popover (defaults to on `click`). Uses [on()](http://api.jquery.com/on/)|
+| Option | `handlerIn` |  | The event that will open the popover (replaces the `event` when `handlerOut` is also set). Uses [on()](http://api.jquery.com/on/)|
+| Option | `handlerOut` |  | The event that will close the popover (replaces the `event` when `handlerIn` is also set). Uses [on()](http://api.jquery.com/on/)|
 | Option | `target` |  | The selector string of the target that activates the popover |
 | Option | `viewport`| | The selector for the viewport. Defaults to 'body' |
 | Option | `resize` | | If set to false, will prevent the browser from resizing at the edges of the viewport. This preserves the *expand to fit content* behavior of `width: auto`. It defaults to true. |

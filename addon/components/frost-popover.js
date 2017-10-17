@@ -16,6 +16,8 @@ export default Component.extend(PropTypeMixin, {
     closest: PropTypes.bool,
     event: PropTypes.string,
     excludePadding: PropTypes.bool,
+    handlerIn: PropTypes.string,
+    handlerOut: PropTypes.string,
     index: PropTypes.number,
     offset: PropTypes.number,
     onDisplay: PropTypes.func,
@@ -47,24 +49,57 @@ export default Component.extend(PropTypeMixin, {
   didInsertElement () {
     const target = this.getTarget()
     const event = this.get('event')
+    const handlerIn = this.get('handlerIn')
+    const handlerOut = this.get('handlerOut')
+    if (handlerIn && handlerOut) {
+      this._eventHandlerIn = (event) => {
+        run.next(() => {
+          if (this.isDestroyed || this.isDestroying) {
+            return
+          }
+          if (!this.get('visible')) {
+            this.togglePopover(event)
+          }
+        })
+      }
+      this._eventHandlerOut = (event) => {
+        run.next(() => {
+          if (this.isDestroyed || this.isDestroying) {
+            return
+          }
+          if (this.get('visible')) {
+            this.togglePopover(event)
+          }
+        })
+      }
+      $(target).on(handlerIn, this._eventHandlerIn)
+      $(target).on(handlerOut, this._eventHandlerOut)
+    } else {
+      this._eventHandler = (event) => {
+        run.next(() => {
+          if (this.isDestroyed || this.isDestroying) {
+            return
+          }
 
-    this._eventHandler = (event) => {
-      run.next(() => {
-        if (this.isDestroyed || this.isDestroying) {
-          return
-        }
+          this.togglePopover(event)
+        })
+      }
 
-        this.togglePopover(event)
-      })
+      $(target).on(event, this._eventHandler)
     }
-
-    $(target).on(event, this._eventHandler)
   },
 
   willDestroyElement () {
     const target = this.getTarget()
     const event = this.get('event')
-    $(target).off(event, this._eventHandler)
+    const handlerIn = this.get('handlerIn')
+    const handlerOut = this.get('handlerOut')
+    if (handlerIn && handlerOut) {
+      $(target).off(handlerIn, this._eventHandlerIn)
+      $(target).off(handlerOut, this._eventHandlerOut)
+    } else {
+      $(target).off(event, this._eventHandler)
+    }
     this.unregisterClickOff()
   },
 
