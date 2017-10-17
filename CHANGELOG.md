@@ -1,3 +1,8 @@
+# 4.3.0 (2017-10-17)
+* Add `handlerIn` and `handlerOut` options that override `event`.
+  * Fixes hover use case and mirrors JQuery's `.hover()` https://api.jquery.com/hover/
+
+
 # 4.2.14 (2017-08-25)
 * **Changed** handling of display/hide
 
