@@ -4,7 +4,7 @@ const {$, run} = Ember
 import hbs from 'htmlbars-inline-precompile'
 import {describe, it} from 'mocha'
 
-import {integration} from 'dummy/tests/helpers/ember-test-utils/setup-component-test'
+import {integration} from 'ember-test-utils/test-support/setup-component-test'
 
 const test = integration('frost-popover')
 describe(test.label, function () {

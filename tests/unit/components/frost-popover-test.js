@@ -5,7 +5,7 @@ const {$, run} = Ember
 import {afterEach, beforeEach, describe, it} from 'mocha'
 import sinon from 'sinon'
 
-import {unit} from 'dummy/tests/helpers/ember-test-utils/setup-component-test'
+import {unit} from 'ember-test-utils/test-support/setup-component-test'
 
 const test = unit('frost-popover')
 describe(test.label, function () {
