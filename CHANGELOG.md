@@ -1,3 +1,6 @@
+# 4.4.0 (2017-10-22)
+* **Added** delay attribute to support a delay display option.
+
 # 4.3.0 (2017-10-17)
 * Add `handlerIn` and `handlerOut` options that override `event`.
   * Fixes hover use case and mirrors JQuery's `.hover()` https://api.jquery.com/hover/
