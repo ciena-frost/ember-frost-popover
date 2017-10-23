@@ -14,6 +14,7 @@ export default Component.extend(PropTypeMixin, {
   classNames: ['tooltip-frost-popover'],
   propTypes: {
     closest: PropTypes.bool,
+    delay: PropTypes.number,
     event: PropTypes.string,
     excludePadding: PropTypes.bool,
     handlerIn: PropTypes.string,
@@ -46,6 +47,12 @@ export default Component.extend(PropTypeMixin, {
     }
   },
 
+  showDelay (event, delay) {
+    return run.later(() => {
+      this.togglePopover(event)
+    }, delay)
+  },
+
   didInsertElement () {
     const target = this.getTarget()
     const event = this.get('event')
@@ -57,16 +64,25 @@ export default Component.extend(PropTypeMixin, {
           if (this.isDestroyed || this.isDestroying) {
             return
           }
+
           if (!this.get('visible')) {
-            this.togglePopover(event)
+            const delay = this.get('delay')
+            if (delay) {
+              this.set('_showDelay', this.showDelay(event, delay))
+            } else {
+              this.togglePopover(event)
+            }
           }
         })
       }
+
       this._eventHandlerOut = (event) => {
         run.next(() => {
           if (this.isDestroyed || this.isDestroying) {
             return
           }
+
+          run.cancel(this.get('_showDelay'))
           if (this.get('visible')) {
             this.togglePopover(event)
           }
@@ -81,7 +97,16 @@ export default Component.extend(PropTypeMixin, {
             return
           }
 
-          this.togglePopover(event)
+          const delay = this.get('delay')
+          if (delay) {
+            if (!this.get('visible')) {
+              this.set('_showDelay', this.showDelay(event, delay))
+            } else {
+              run.cancel(this.get('_showDelay'))
+            }
+          } else {
+            this.togglePopover(event)
+          }
         })
       }
 
@@ -100,6 +125,7 @@ export default Component.extend(PropTypeMixin, {
     } else {
       $(target).off(event, this._eventHandler)
     }
+    run.cancel(this.get('_showDelay'))
     this.unregisterClickOff()
   },
 

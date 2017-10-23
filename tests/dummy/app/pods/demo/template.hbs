@@ -57,6 +57,20 @@
   {{/frost-popover}}
 {{/frost-button}}
 
+<h2>Delay display</h2>
+
+{{#frost-button hook='clickDelayButton' size='small' priority='primary' class='child' text='Click me!'}}
+  {{#frost-popover target='.child' delay=500 excludePadding=true closest=true}}
+    <span class='inside'>Click me delayed!</span>
+  {{/frost-popover}}
+{{/frost-button}}
+
+{{#frost-button hook='mouseEnterDelayButton' size='small' priority='primary' class='child' text='Hover me!'}}
+  {{#frost-popover target='.child' delay=500 handlerIn='mouseenter' handlerOut='mouseleave' excludePadding=true closest=true}}
+    <span class='inside'>Hover me delayed!</span>
+  {{/frost-popover}}
+{{/frost-button}}
+
 <h2>Other Features</h2>
 {{#frost-button hook='customCloseButton' size='small' priority='primary' class='button' text='Custom Close'}}
   {{#frost-popover target='.button' closest=true offset=10 position='bottom' as |close|}}

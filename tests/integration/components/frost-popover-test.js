@@ -3,7 +3,7 @@ import Ember from 'ember'
 const {$, run} = Ember
 import {integration} from 'ember-test-utils/test-support/setup-component-test'
 import hbs from 'htmlbars-inline-precompile'
-import {describe, it} from 'mocha'
+import {beforeEach, describe, it} from 'mocha'
 
 const test = integration('frost-popover')
 describe(test.label, function () {
@@ -67,6 +67,65 @@ describe(test.label, function () {
         }, 100)
       }, 100)
     }, 100)
+  })
+
+  describe('when delay sets to 500ms with handlerIn and handlerOut', function () {
+    this.timeout(5000)
+    beforeEach(function () {
+      return this.render(hbs`
+        <div id='foo' class='target'>
+          click test
+        </div>
+        {{#frost-popover target='#foo' delay=500 handlerIn='mouseenter' handlerOut='mouseleave'}}
+          <span class='inside'>Inside</span>
+        {{/frost-popover}}
+      `)
+    })
+
+    it('should not be visible after 400ms', function (done) {
+      $('#foo').mouseenter()
+      run.later(function () {
+        expect($('.visible')).to.have.length(0)
+        done()
+      }, 400)
+    })
+
+    it('should be visible after 700ms', function (done) {
+      $('#foo').mouseenter()
+      run.later(function () {
+        expect($('.visible')).to.have.length(1)
+        done()
+      }, 600)
+    })
+  })
+
+  describe('when delay sets to 500ms with click event', function () {
+    this.timeout(5000)
+    beforeEach(function () {
+      return this.render(hbs`
+        <div id='foo' class='target'>
+          click test
+        </div>
+        {{#frost-popover target='#foo' delay=500}}
+          <span class='inside'>Inside</span>
+        {{/frost-popover}}
+      `)
+    })
+
+    it('should not be visible after 400ms', function (done) {
+      $('#foo').click()
+      run.later(function () {
+        expect($('.visible')).to.have.length(0)
+        done()
+      }, 400)
+    })
+    it('should be visible after 700ms', function (done) {
+      $('#foo').click()
+      run.later(function () {
+        expect($('.visible')).to.have.length(1)
+        done()
+      }, 600)
+    })
   })
 
   it('should constrain to the viewport', function (done) {
