@@ -2,10 +2,9 @@
 import {expect} from 'chai'
 import Ember from 'ember'
 const {$, run} = Ember
+import {unit} from 'ember-test-utils/test-support/setup-component-test'
 import {afterEach, beforeEach, describe, it} from 'mocha'
 import sinon from 'sinon'
-
-import {unit} from 'dummy/tests/helpers/ember-test-utils/setup-component-test'
 
 const test = unit('frost-popover')
 describe(test.label, function () {
@@ -20,7 +19,7 @@ describe(test.label, function () {
     sandbox.restore()
   })
 
-  it('calls passed action while close', function () {
+  it('should call passed action while close', function () {
     let callCounter = 0
     let forwardedAction = function () {
       callCounter++
@@ -41,18 +40,18 @@ describe(test.label, function () {
       sandbox.spy(component, 'closePopover')
       component.didInsertElement()
     })
-    it('registers event', function () {
+    it('should register event', function () {
       expect($.fn.on.firstCall).to.have.been.calledWith('mouseenter', component._eventHandlerIn)
       expect($.fn.on.secondCall).to.have.been.calledWith('mouseleave', component._eventHandlerOut)
     })
 
-    it('unregisters event', function () {
+    it('should unregister event', function () {
       component.willDestroyElement()
       expect($.fn.off.firstCall).to.have.been.calledWith('mouseenter', component._eventHandlerIn)
       expect($.fn.off.secondCall).to.have.been.calledWith('mouseleave', component._eventHandlerOut)
     })
 
-    it('does not call togglePopover when component is destroyed', function () {
+    it('should not call togglePopover when component is destroyed', function () {
       run(() => {
         const eventHandlerIn = component._eventHandlerIn
         const eventHandlerOut = component._eventHandlerOut
@@ -64,7 +63,7 @@ describe(test.label, function () {
       })
     })
 
-    it('does not call closePopover when component is destroyed', function () {
+    it('should not call closePopover when component is destroyed', function () {
       run(() => {
         component.destroy()
         component.registerClickOff()
@@ -86,16 +85,16 @@ describe(test.label, function () {
       component.didInsertElement()
     })
 
-    it('registers event', function () {
+    it('should register event', function () {
       expect($.fn.on).to.have.been.calledWith('click', component._eventHandler)
     })
 
-    it('unregisters event', function () {
+    it('should unregister event', function () {
       component.willDestroyElement()
       expect($.fn.off).to.have.been.calledWith('click', component._eventHandler)
     })
 
-    it('does not call togglePopover when component is destroyed', function () {
+    it('should not call togglePopover when component is destroyed', function () {
       run(() => {
         const eventHandler = component._eventHandler
         component.destroy()
@@ -104,7 +103,7 @@ describe(test.label, function () {
       })
     })
 
-    it('does not call closePopover when component is destroyed', function () {
+    it('should not call closePopover when component is destroyed', function () {
       run(() => {
         component.destroy()
         component.registerClickOff()

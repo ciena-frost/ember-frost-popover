@@ -1,16 +1,15 @@
 import {expect} from 'chai'
 import Ember from 'ember'
 const {$, run} = Ember
+import {integration} from 'ember-test-utils/test-support/setup-component-test'
 import hbs from 'htmlbars-inline-precompile'
 import {beforeEach, describe, it} from 'mocha'
-
-import {integration} from 'dummy/tests/helpers/ember-test-utils/setup-component-test'
 
 const test = integration('frost-popover')
 describe(test.label, function () {
   test.setup()
 
-  it('renders', function () {
+  it('should render', function () {
     this.render(hbs`
       <div class='target'>
         frost-popover testbed
@@ -22,7 +21,7 @@ describe(test.label, function () {
     expect(this.$()).to.have.length(1)
   })
 
-  it('clicks', function (done) {
+  it('should click', function (done) {
     this.timeout(5000)
     this.render(hbs`
       <div id='foo' class='target'>
@@ -42,7 +41,7 @@ describe(test.label, function () {
     }, 100)
   })
 
-  it('test handlerIn and handlerOut', function (done) {
+  it('should test handlerIn and handlerOut', function (done) {
     this.timeout(5000)
     this.render(hbs`
       <div id='foo' class='target'>
@@ -83,7 +82,7 @@ describe(test.label, function () {
       `)
     })
 
-    it('after 400ms, popover is not visible.', function (done) {
+    it('should not be visible after 400ms', function (done) {
       $('#foo').mouseenter()
       run.later(function () {
         expect($('.visible')).to.have.length(0)
@@ -91,7 +90,7 @@ describe(test.label, function () {
       }, 400)
     })
 
-    it('after 700ms, popover is visible.', function (done) {
+    it('should be visible after 700ms', function (done) {
       $('#foo').mouseenter()
       run.later(function () {
         expect($('.visible')).to.have.length(1)
@@ -113,14 +112,14 @@ describe(test.label, function () {
       `)
     })
 
-    it('after 400ms, popover is not visible.', function (done) {
+    it('should not be visible after 400ms', function (done) {
       $('#foo').click()
       run.later(function () {
         expect($('.visible')).to.have.length(0)
         done()
       }, 400)
     })
-    it('after 700ms, popover is visible.', function (done) {
+    it('should be visible after 700ms', function (done) {
       $('#foo').click()
       run.later(function () {
         expect($('.visible')).to.have.length(1)
@@ -129,7 +128,7 @@ describe(test.label, function () {
     })
   })
 
-  it('constrains to the viewport', function (done) {
+  it('should constrain to the viewport', function (done) {
     this.render(hbs`
       <div id='viewport' style='width: 400px; height: 400px;'>
         <span id='viewport-test'>

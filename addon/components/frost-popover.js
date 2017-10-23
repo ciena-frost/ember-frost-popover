@@ -208,7 +208,7 @@ export default Component.extend(PropTypeMixin, {
     return null
   },
 
-/* eslint-disable complexity */
+  /* eslint-disable complexity */
   getViewport () {
     const viewportProp = this.get('viewport')
 
@@ -221,7 +221,6 @@ export default Component.extend(PropTypeMixin, {
         return viewportProp.call(this, this.getTarget())
     }
   },
-/* eslint-disable complexity */
 
   /**
    * Calculates the offsets needed to keep the the popover within the viewport. If the attachment
@@ -255,6 +254,7 @@ export default Component.extend(PropTypeMixin, {
 
     return delta
   },
+  /* eslint-enable complexity */
 
   /**
    * Gets the box calculations using relative offsets
@@ -339,7 +339,7 @@ export default Component.extend(PropTypeMixin, {
     }
   },
 
-/* eslint-disable complexity */
+  /* eslint-disable complexity */
   place () {
     let targetElement = this.getTarget()
     let popoverElement = this.get('element')
@@ -390,7 +390,7 @@ export default Component.extend(PropTypeMixin, {
       left
     }
   },
-/* eslint-disable complexity */
+  //* eslint-enable complexity */
 
   /**
    * Attempts to place the popover repeating up to maxPlacementRetries since every placement could
