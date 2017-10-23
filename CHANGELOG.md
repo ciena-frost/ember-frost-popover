@@ -1,3 +1,8 @@
+# 4.4.1 (2017-10-23)
+* **Updated** testing dependencies
+* **Removed** no longer needed `bower.json` and `.bowerrc`
+
+
 # 4.4.0 (2017-10-22)
 * **Added** delay attribute to support a delay display option.
 
