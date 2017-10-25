@@ -1,6 +1,8 @@
-import Ember from 'ember'
-const {$, Component, isPresent, run, typeOf} = Ember
+import Component from '@ember/component'
+import {run} from '@ember/runloop'
+import {isPresent, typeOf} from '@ember/utils'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
+import $ from 'jquery'
 
 import layout from '../templates/components/frost-popover'
 import {checkBottom, checkLeft, checkRight, checkTop} from './util'

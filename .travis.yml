@@ -1,19 +1,12 @@
-sudo: required
+sudo: false
 dist: trusty
 language: node_js
 
 node_js:
-- '6.9.1'
-- 'stable'
+- '8.1.2'
 
 addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    - google-chrome
-    packages:
-    - google-chrome-stable
-    - g++-4.8
+  chrome: stable
   firefox: 'latest'
 
 cache:
@@ -21,21 +14,26 @@ cache:
   - node_modules
 
 env:
+  global:
+    # See https://git.io/vdao3 for details.
+    - JOBS=1
+    - secure: atbVnEfJRmj6lm5t9voOjr8oVqbUBSmjY1kV4DBynTdBh+n2yZ/D2lcOeEeg4bAPHxUJMI5hxoST6xAMMeLVUhFvC1CDFsogS/B7RSujRLco5EMpX08Y0tAkGbgJLLTeKL1EfWBEQGUfUxJJCVa2xBk0xFKZRKLp/DdvBnA3DeznIs6ut0OcrY71KiBEF2WuTT17QSeVaJnVHz1Wb/25xf0J3nLtjM6LZ1NEdqHUdMBHkc/VVHQE3BqXTw89PnJrQzwyFwRpzYVwL0UAPLoaiwG11FvhBxtPCvhrrX3iDwx7C+HK8vQC62e0mFDHNsffnj1mbVovap6pNA3P/fTLP8cXtHV0gFz7tKYyNFyHAI6JrNTndWwnT4I0Dj05HZ/dOpx3oTrpZZOsRAZhP2VF0508yOLtMPVMBDunToYO2wQI43ri5Hh0s30jM97xEO7w+KRHqr8N5KyL3gn+flgozk+Y+ZKmq8OPcs3xmppWsJdtZx9YNA5xxJiLAGck3uiLdJ2YMC4dg7UtBxo31PslPAcD9XziniG5n6D21++V69r50O2ck1wW27X68d9HFkfw4EiKQrX74oNaUcIr4yoY1XojxVXLA5+4xl1YqLxHkICH2NkFsW1jyGz+weZKCGlbxTe5xPwXyBRq5ra/0c7F1J+k53PomxBfT0yTFf7JBnw=
   matrix:
   - EMBER_TRY_SCENARIO=ember-lts-2.8
+  - EMBER_TRY_SCENARIO=ember-release
+  - EMBER_TRY_SCENARIO=ember-beta
+  - EMBER_TRY_SCENARIO=ember-canary
   - EMBER_TRY_SCENARIO=ember-default
-  global:
-    - CXX=g++-4.8
-    - secure: atbVnEfJRmj6lm5t9voOjr8oVqbUBSmjY1kV4DBynTdBh+n2yZ/D2lcOeEeg4bAPHxUJMI5hxoST6xAMMeLVUhFvC1CDFsogS/B7RSujRLco5EMpX08Y0tAkGbgJLLTeKL1EfWBEQGUfUxJJCVa2xBk0xFKZRKLp/DdvBnA3DeznIs6ut0OcrY71KiBEF2WuTT17QSeVaJnVHz1Wb/25xf0J3nLtjM6LZ1NEdqHUdMBHkc/VVHQE3BqXTw89PnJrQzwyFwRpzYVwL0UAPLoaiwG11FvhBxtPCvhrrX3iDwx7C+HK8vQC62e0mFDHNsffnj1mbVovap6pNA3P/fTLP8cXtHV0gFz7tKYyNFyHAI6JrNTndWwnT4I0Dj05HZ/dOpx3oTrpZZOsRAZhP2VF0508yOLtMPVMBDunToYO2wQI43ri5Hh0s30jM97xEO7w+KRHqr8N5KyL3gn+flgozk+Y+ZKmq8OPcs3xmppWsJdtZx9YNA5xxJiLAGck3uiLdJ2YMC4dg7UtBxo31PslPAcD9XziniG5n6D21++V69r50O2ck1wW27X68d9HFkfw4EiKQrX74oNaUcIr4yoY1XojxVXLA5+4xl1YqLxHkICH2NkFsW1jyGz+weZKCGlbxTe5xPwXyBRq5ra/0c7F1J+k53PomxBfT0yTFf7JBnw=
 
 matrix:
   fast_finish: true
   allow_failures:
-  - node_js: 'stable'
+  - env: EMBER_TRY_SCENARIO=ember-beta
+  - env: EMBER_TRY_SCENARIO=ember-canary
 
 before_install:
 - npm config set spin false
-- npm install -g coveralls pr-bumper@^1.0.0
+- npm install -g coveralls pr-bumper@^3.1.0
 - $(npm root -g)/pr-bumper/.travis/maybe-check-scope.sh
 
 install:
@@ -63,7 +61,7 @@ deploy:
   on:
     all_branches: true
     condition: "$EMBER_TRY_SCENARIO = 'ember-default'"
-    node: '6.9.1'
+    node: '8.1.2'
     tags: true
 
 notifications:

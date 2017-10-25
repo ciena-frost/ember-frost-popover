@@ -1,8 +1,8 @@
+import {run} from '@ember/runloop'
 import {expect} from 'chai'
-import Ember from 'ember'
-const {$, run} = Ember
 import {integration} from 'ember-test-utils/test-support/setup-component-test'
 import hbs from 'htmlbars-inline-precompile'
+import $ from 'jquery'
 import {beforeEach, describe, it} from 'mocha'
 
 const test = integration('frost-popover')
