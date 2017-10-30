@@ -25,6 +25,7 @@ export default Component.extend(PropTypeMixin, {
     onHide: PropTypes.func,
     position: PropTypes.string,
     resize: PropTypes.bool,
+    stopPropagation: PropTypes.bool,
     viewport: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object,
@@ -41,6 +42,7 @@ export default Component.extend(PropTypeMixin, {
       offset: 10,
       position: 'bottom',
       resize: true,
+      stopPropagation: false,
       viewport: 'body',
       visible: false,
       autoPosition: 'bottom'
@@ -60,11 +62,14 @@ export default Component.extend(PropTypeMixin, {
     const handlerOut = this.get('handlerOut')
     if (handlerIn && handlerOut) {
       this._eventHandlerIn = (event) => {
-        run.next(() => {
+      // eslint-disable-next-line complexity
+        run(() => {
           if (this.isDestroyed || this.isDestroying) {
             return
           }
-
+          if (this.get('stopPropagation')) {
+            event.stopPropagation()
+          }
           if (!this.get('visible')) {
             const delay = this.get('delay')
             if (delay) {
@@ -77,11 +82,13 @@ export default Component.extend(PropTypeMixin, {
       }
 
       this._eventHandlerOut = (event) => {
-        run.next(() => {
+        run(() => {
           if (this.isDestroyed || this.isDestroying) {
             return
           }
-
+          if (this.get('stopPropagation')) {
+            event.stopPropagation()
+          }
           run.cancel(this.get('_showDelay'))
           if (this.get('visible')) {
             this.togglePopover(event)
@@ -92,11 +99,14 @@ export default Component.extend(PropTypeMixin, {
       $(target).on(handlerOut, this._eventHandlerOut)
     } else {
       this._eventHandler = (event) => {
-        run.next(() => {
+        // eslint-disable-next-line complexity
+        run(() => {
           if (this.isDestroyed || this.isDestroying) {
             return
           }
-
+          if (this.get('stopPropagation')) {
+            event.stopPropagation()
+          }
           const delay = this.get('delay')
           if (delay) {
             if (!this.get('visible')) {
