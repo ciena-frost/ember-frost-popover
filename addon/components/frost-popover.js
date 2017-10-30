@@ -62,13 +62,15 @@ export default Component.extend(PropTypeMixin, {
     const handlerOut = this.get('handlerOut')
     if (handlerIn && handlerOut) {
       this._eventHandlerIn = (event) => {
-      // eslint-disable-next-line complexity
         run(() => {
-          if (this.isDestroyed || this.isDestroying) {
-            return
-          }
           if (this.get('stopPropagation')) {
             event.stopPropagation()
+          }
+        })
+        // eslint-disable-next-line complexity
+        run.next(() => {
+          if (this.isDestroyed || this.isDestroying) {
+            return
           }
           if (!this.get('visible')) {
             const delay = this.get('delay')
@@ -83,11 +85,13 @@ export default Component.extend(PropTypeMixin, {
 
       this._eventHandlerOut = (event) => {
         run(() => {
-          if (this.isDestroyed || this.isDestroying) {
-            return
-          }
           if (this.get('stopPropagation')) {
             event.stopPropagation()
+          }
+        })
+        run.next(() => {
+          if (this.isDestroyed || this.isDestroying) {
+            return
           }
           run.cancel(this.get('_showDelay'))
           if (this.get('visible')) {
@@ -99,13 +103,15 @@ export default Component.extend(PropTypeMixin, {
       $(target).on(handlerOut, this._eventHandlerOut)
     } else {
       this._eventHandler = (event) => {
-        // eslint-disable-next-line complexity
         run(() => {
-          if (this.isDestroyed || this.isDestroying) {
-            return
-          }
           if (this.get('stopPropagation')) {
             event.stopPropagation()
+          }
+        })
+        // eslint-disable-next-line complexity
+        run.next(() => {
+          if (this.isDestroyed || this.isDestroying) {
+            return
           }
           const delay = this.get('delay')
           if (delay) {
