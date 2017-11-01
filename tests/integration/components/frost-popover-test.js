@@ -161,7 +161,8 @@ describe(test.label, function () {
     })
     this.render(hbs`
     <div class='event-propogation-container' onclick={{action spy}} style="position: relative;">
-        {{frost-button hook='propogateButton' size='small' priority='primary' class='propogate' text='Allow Propogation'}}
+        {{frost-button hook='propogateButton' size='small' priority='primary' 
+          class='propogate' text='Allow Propogation'}}
         {{#frost-popover target='.propogate' position='auto'}}
           <span class='inside'>Allowed Propogation</span>
         {{/frost-popover}}
@@ -181,7 +182,8 @@ describe(test.label, function () {
     this.setProperties({spy})
     this.render(hbs`
     <div class='event-propogation-container' onclick={{action spy}} style="position: relative;">
-    {{#frost-button hook='stopPropogateButton' size='small' priority='primary' class='stop-propogate' text='Stop Propogation'}}
+    {{#frost-button hook='stopPropogateButton' size='small' priority='primary' 
+      class='stop-propogate' text='Stop Propogation'}}
     {{#frost-popover target='.stop-propogate' position='auto' closest=true stopPropagation=true}}
       <span class='inside'>Stopped Propogation</span>
     {{/frost-popover}}
