@@ -1,3 +1,11 @@
+# 6.0.0 (2017-11-02)
+
+## WARNING: THIS REVERTS EMBER CLI 2.16.2 BACK TO 2.12.3
+
+We apologize for this change. Unfortunately, due to the internal needs of our organization this became a required action.
+
+The 2.16.2 changes are now located in the `ember-cli-2.16.2` branch and will hopefully be contained in a versioned release again in the future.
+
 # 5.0.0 (2017-10-25)
 * **Updated** to Ember CLI 2.16.2 and babel 6
 * **Updated** to using ember-decorators which replaces ember-computed-decorators
