@@ -1,5 +1,5 @@
-import Controller from '@ember/controller'
-import $ from 'jquery'
+import Ember from 'ember'
+const {$, Controller} = Ember
 
 export default Controller.extend({
   actions: {
