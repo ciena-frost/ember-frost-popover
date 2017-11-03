@@ -124,3 +124,16 @@
     <span class='toggle-content'>Scary monster! RAWRR!</span>
   {{/frost-popover}}
 </div>
+
+<h2>Event Propogation</h2>
+<div class='event-propogation-container' onclick="alert('Propgated')" style="position: relative;">
+  {{frost-button hook='propogateButton' size='small' priority='primary' class='propogate' text='Allow Propogation'}}
+  {{#frost-popover target='.propogate' position='auto'}}
+    <span class='inside'>Allowed Propogation</span>
+  {{/frost-popover}}
+  {{#frost-button hook='stopPropogateButton' size='small' priority='primary' class='stop-propogate' text='Stop Propogation'}}
+    {{#frost-popover target='.stop-propogate' position='auto' closest=true stopPropagation=true}}
+      <span class='inside'>Stopped Propogation</span>
+    {{/frost-popover}}
+  {{/frost-button}}
+</div>
