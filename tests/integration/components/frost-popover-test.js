@@ -3,7 +3,7 @@ import Ember from 'ember'
 const {$, run} = Ember
 import {integration} from 'ember-test-utils/test-support/setup-component-test'
 import hbs from 'htmlbars-inline-precompile'
-import {beforeEach, describe, it} from 'mocha'
+import {afterEach, beforeEach, describe, it} from 'mocha'
 import sinon from 'sinon'
 
 const test = integration('frost-popover')
@@ -153,49 +153,60 @@ describe(test.label, function () {
       }, 100)
     }, 100)
   })
-
-  it('should propogate event by default', function (done) {
-    let spy = sinon.spy()
-    this.set('spy', () => {
-      spy()
+  describe('when stopPropagation is not set', function () {
+    let spy
+    beforeEach(function () {
+      spy = sinon.spy()
+      this.setProperties({
+        spy
+      })
+      this.render(hbs`
+      <div class='event-propogation-container' onmousedown={{action spy}} style="position: relative;">
+        {{#frost-button hook='stopPropogateButton' size='small' priority='primary' 
+          class='propogate' text='Stop Propogation'}}
+          {{#frost-popover target='.propogate' event='mousedown' position='auto' closest=true}}
+            <span class='inside'>Stopped Propogation</span>
+          {{/frost-popover}}
+        {{/frost-button}}
+      </div>
+      `)
+      $('.propogate').trigger('mousedown')
     })
-    this.render(hbs`
-    <div class='event-propogation-container' onclick={{action spy}} style="position: relative;">
-        {{frost-button hook='propogateButton' size='small' priority='primary' 
-          class='propogate' text='Allow Propogation'}}
-        {{#frost-popover target='.propogate' position='auto'}}
-          <span class='inside'>Allowed Propogation</span>
-        {{/frost-popover}}
-   </div>
-    `)
-    run.later(() => {
-      $('.propogate').click()
-      run.later(() => {
-        expect(spy.callCount).to.gte(1)
-        done()
-      }, 200)
-    }, 100)
+    afterEach(function () {
+      spy = null
+    })
+
+    it('should propogate the event', function () {
+      expect(spy).to.have.callCount(1)
+    })
   })
 
-  it('should not propogate event when stopPropagation=true', function (done) {
-    let spy = sinon.spy()
-    this.setProperties({spy})
-    this.render(hbs`
-    <div class='event-propogation-container' onclick={{action spy}} style="position: relative;">
-    {{#frost-button hook='stopPropogateButton' size='small' priority='primary' 
-      class='stop-propogate' text='Stop Propogation'}}
-    {{#frost-popover target='.stop-propogate' position='auto' closest=true stopPropagation=true}}
-      <span class='inside'>Stopped Propogation</span>
-    {{/frost-popover}}
-  {{/frost-button}}
-   </div>
-    `)
-    run.later(() => {
-      $('.propogate').click()
-      run.later(() => {
-        expect(spy.callCount).to.equal(0)
-        done()
-      }, 200)
-    }, 100)
+  describe('when stopPropagation is set to true', function () {
+    let spy
+    beforeEach(function () {
+      spy = sinon.spy()
+      this.setProperties({
+        spy
+      })
+      this.render(hbs`
+        <div class='event-propogation-container' onmousedown={{action spy}} style="position: relative;">
+          {{#frost-button hook='stopPropogateButton' size='small' priority='primary' 
+            class='stop-propogate' text='Stop Propogation'}}
+            {{#frost-popover target='.stop-propogate' position='auto' event='mousedown' 
+            closest=true stopPropagation=true}}
+              <span class='inside'>Stopped Propogation</span>
+            {{/frost-popover}}
+          {{/frost-button}}
+        </div>
+      `)
+      $('.stop-propogate').trigger('mousedown')
+    })
+    afterEach(function () {
+      spy = null
+    })
+
+    it('should propogate the event', function () {
+      expect(spy).to.have.callCount(0)
+    })
   })
 })
