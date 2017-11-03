@@ -4,6 +4,7 @@ const {$, run} = Ember
 import {integration} from 'ember-test-utils/test-support/setup-component-test'
 import hbs from 'htmlbars-inline-precompile'
 import {beforeEach, describe, it} from 'mocha'
+import sinon from 'sinon'
 
 const test = integration('frost-popover')
 describe(test.label, function () {
@@ -150,6 +151,51 @@ describe(test.label, function () {
         expect(popoverRect.left >= viewportRect.left).to.equal(true)
         done()
       }, 100)
+    }, 100)
+  })
+
+  it('should propogate event by default', function (done) {
+    let spy = sinon.spy()
+    this.set('spy', () => {
+      spy()
+    })
+    this.render(hbs`
+    <div class='event-propogation-container' onclick={{action spy}} style="position: relative;">
+        {{frost-button hook='propogateButton' size='small' priority='primary' 
+          class='propogate' text='Allow Propogation'}}
+        {{#frost-popover target='.propogate' position='auto'}}
+          <span class='inside'>Allowed Propogation</span>
+        {{/frost-popover}}
+   </div>
+    `)
+    run.later(() => {
+      $('.propogate').click()
+      run.later(() => {
+        expect(spy.callCount).to.gte(1)
+        done()
+      }, 200)
+    }, 100)
+  })
+
+  it('should not propogate event when stopPropagation=true', function (done) {
+    let spy = sinon.spy()
+    this.setProperties({spy})
+    this.render(hbs`
+    <div class='event-propogation-container' onclick={{action spy}} style="position: relative;">
+    {{#frost-button hook='stopPropogateButton' size='small' priority='primary' 
+      class='stop-propogate' text='Stop Propogation'}}
+    {{#frost-popover target='.stop-propogate' position='auto' closest=true stopPropagation=true}}
+      <span class='inside'>Stopped Propogation</span>
+    {{/frost-popover}}
+  {{/frost-button}}
+   </div>
+    `)
+    run.later(() => {
+      $('.propogate').click()
+      run.later(() => {
+        expect(spy.callCount).to.equal(0)
+        done()
+      }, 200)
     }, 100)
   })
 })

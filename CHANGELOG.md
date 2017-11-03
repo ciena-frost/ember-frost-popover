@@ -1,3 +1,25 @@
+# 6.0.0 (2017-11-02)
+
+## WARNING: THIS REVERTS EMBER CLI 2.16.2 BACK TO 2.12.3
+
+We apologize for this change. Unfortunately, due to the internal needs of our organization this became a required action.
+
+The 2.16.2 changes are now located in the `ember-cli-2.16.2` branch and will hopefully be contained in a versioned release again in the future.
+
+# 5.0.0 (2017-10-25)
+* **Updated** to Ember CLI 2.16.2 and babel 6
+* **Updated** to using ember-decorators which replaces ember-computed-decorators
+* **Updated** dependencies
+* **Updated** pr-bumber to version 3
+* **Updated** CONTRIBUTING.md file
+* **Updated** to using Ember Javascript Modules API https://github.com/ember-cli/ember-rfc176-data
+* **Updated** blueprints to latest versions of dependencies
+* **Updated** to use chrome headless in Travis CI
+* **Updated** to using Node 8.1.2 NPM 5
+* **Added** eslint-plugin-ember to enforce Ember Javascript Modules API syntax
+* **Removed** running of code coverage until issue is resolved with ember-cli-code-coverage: https://github.com/kategengler/ember-cli-code-coverage/issues/133
+* **Removed** running of ember-try its-2.12 scenario until issue is resolved: https://github.com/ember-cli/ember-try/issues/148
+
 # 4.4.1 (2017-10-23)
 * **Updated** testing dependencies
 * **Removed** no longer needed `bower.json` and `.bowerrc`

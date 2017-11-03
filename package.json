@@ -1,6 +1,6 @@
 {
   "name": "ember-frost-popover",
-  "version": "4.4.1",
+  "version": "6.0.0",
   "description": "Popping over stuff.",
   "directories": {
     "doc": "doc",
@@ -48,11 +48,11 @@
     "ember-frost-test": "^2.1.2",
     "ember-hook": "^1.4.2",
     "ember-load-initializers": "^0.6.0",
-    "ember-prop-types": "^3.14.1",
+    "ember-prop-types": "^5.0.1",
     "ember-resolver": "^2.1.1",
     "ember-sinon": "^0.7.0",
     "ember-source": "~2.12.0",
-    "ember-spread": "^1.2.2",
+    "ember-spread": "^3.0.0",
     "ember-test-utils": "^6.0.0",
     "ember-truth-helpers": "^1.3.0",
     "loader.js": "^4.2.3",
@@ -66,7 +66,7 @@
     "ember-cli-babel": "^5.1.7",
     "ember-cli-htmlbars": "^1.1.1",
     "ember-cli-sass": "5.6.0",
-    "ember-frost-core": "1.23.10"
+    "ember-frost-core": "^3.0.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
