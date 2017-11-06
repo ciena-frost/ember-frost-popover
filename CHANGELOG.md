@@ -1,3 +1,7 @@
+# 6.1.0 (2017-11-06)
+* Add `event.stopPropagation()` option to popover
+
+
 # 6.0.0 (2017-11-02)
 
 ## WARNING: THIS REVERTS EMBER CLI 2.16.2 BACK TO 2.12.3
