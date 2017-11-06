@@ -56,6 +56,7 @@ ember install ember-frost-popover
 | Option | `target` |  | The selector string of the target that activates the popover |
 | Option | `viewport`| | The selector for the viewport. Defaults to 'body' |
 | Option | `resize` | | If set to false, will prevent the browser from resizing at the edges of the viewport. This preserves the *expand to fit content* behavior of `width: auto`. It defaults to true. |
+| Option | `stopPropagation` | | If set to true event handlers will call `event.stopPropagation()` |
 | Option | `delay` | number | Delay the open of the popover if provided, unit in ms.|
 
 ## Specifying Target
