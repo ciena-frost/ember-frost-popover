@@ -1,3 +1,6 @@
+# 6.1.1 (2017-11-06)
+* Set `ember-frost-core` to use the latest minor
+
 # 6.1.0 (2017-11-06)
 * Add `event.stopPropagation()` option to popover
 
