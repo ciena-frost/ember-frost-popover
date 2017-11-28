@@ -135,6 +135,40 @@ describe(test.label, function () {
     })
   })
 
+  describe('when hide delay sets to 500ms with mouseenter/leave for event', function () {
+    this.timeout(5000)
+    beforeEach(function () {
+      this.render(hbs`
+        <div id='foo' class='target'>
+          click test
+        </div>
+        {{#frost-popover target='#foo' hideDelay=500 event='mouseenter mouseleave'}}
+          <span class='inside'>Inside</span>
+        {{/frost-popover}}
+      `)
+      return wait().then(() => {
+        $('#foo').mouseenter()
+        return wait()
+      })
+    })
+
+    it('should still be visible after 400ms', function (done) {
+      $('#foo').mouseleave()
+      run.later(function () {
+        expect($('.visible')).to.have.length(1)
+        done()
+      }, 400)
+    })
+
+    it('should not longer be visible after 700ms', function (done) {
+      $('#foo').mouseleave()
+      run.later(function () {
+        expect($('.visible')).to.have.length(0)
+        done()
+      }, 600)
+    })
+  })
+
   describe('when delay sets to 500ms with click event', function () {
     this.timeout(5000)
     beforeEach(function () {
