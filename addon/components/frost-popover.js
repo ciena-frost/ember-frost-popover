@@ -17,7 +17,7 @@ export default Component.extend(PropTypeMixin, {
   propTypes: {
     closest: PropTypes.bool,
     delay: PropTypes.number,
-    hideDelay: PropTypes.number, // This doesn't currently properly with 'click'
+    hideDelay: PropTypes.number, // This currently doesn't work properly with 'click'
     event: PropTypes.string,
     excludePadding: PropTypes.bool,
     handlerIn: PropTypes.string,
