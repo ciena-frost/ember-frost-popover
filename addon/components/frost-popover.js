@@ -130,7 +130,7 @@ export default Component.extend(PropTypeMixin, {
           if (delay || hideDelay) {
             let delayToUse = this.get('visible') ? hideDelay : delay
             if (delayToUse) {
-              this.showDelay(event, hideDelay)
+              this.showDelay(event, delayToUse)
             } else {
               this.togglePopover(event)
             }

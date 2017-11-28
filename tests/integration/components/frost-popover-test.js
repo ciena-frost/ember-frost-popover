@@ -1,6 +1,7 @@
 import {expect} from 'chai'
 import Ember from 'ember'
 const {$, run} = Ember
+import wait from 'ember-test-helpers/wait'
 import {integration} from 'ember-test-utils/test-support/setup-component-test'
 import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe, it} from 'mocha'
@@ -100,6 +101,40 @@ describe(test.label, function () {
     })
   })
 
+  describe('when hide delay sets to 500ms with handlerIn and handlerOut', function () {
+    this.timeout(5000)
+    beforeEach(function () {
+      this.render(hbs`
+        <div id='foo' class='target'>
+          click test
+        </div>
+        {{#frost-popover target='#foo' hideDelay=500 handlerIn='mouseenter' handlerOut='mouseleave'}}
+          <span class='inside'>Inside</span>
+        {{/frost-popover}}
+      `)
+      return wait().then(() => {
+        $('#foo').mouseenter()
+        return wait()
+      })
+    })
+
+    it('should still be visible after 400ms', function (done) {
+      $('#foo').mouseleave()
+      run.later(function () {
+        expect($('.visible')).to.have.length(1)
+        done()
+      }, 400)
+    })
+
+    it('should not longer be visible after 700ms', function (done) {
+      $('#foo').mouseleave()
+      run.later(function () {
+        expect($('.visible')).to.have.length(0)
+        done()
+      }, 600)
+    })
+  })
+
   describe('when delay sets to 500ms with click event', function () {
     this.timeout(5000)
     beforeEach(function () {
@@ -162,7 +197,7 @@ describe(test.label, function () {
       })
       this.render(hbs`
       <div class='event-propogation-container' onmousedown={{action spy}} style="position: relative;">
-        {{#frost-button hook='stopPropogateButton' size='small' priority='primary' 
+        {{#frost-button hook='stopPropogateButton' size='small' priority='primary'
           class='propogate' text='Stop Propogation'}}
           {{#frost-popover target='.propogate' event='mousedown' position='auto' closest=true}}
             <span class='inside'>Stopped Propogation</span>
@@ -190,9 +225,9 @@ describe(test.label, function () {
       })
       this.render(hbs`
         <div class='event-propogation-container' onmousedown={{action spy}} style="position: relative;">
-          {{#frost-button hook='stopPropogateButton' size='small' priority='primary' 
+          {{#frost-button hook='stopPropogateButton' size='small' priority='primary'
             class='stop-propogate' text='Stop Propogation'}}
-            {{#frost-popover target='.stop-propogate' position='auto' event='mousedown' 
+            {{#frost-popover target='.stop-propogate' position='auto' event='mousedown'
             closest=true stopPropagation=true}}
               <span class='inside'>Stopped Propogation</span>
             {{/frost-popover}}
