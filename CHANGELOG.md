@@ -1,3 +1,7 @@
+# 6.1.2 (2017-11-29)
+* **Added** hideDelay option (doesn't work properly for 'click')
+* **Added** include content in events option to inherit events
+
 # 6.1.1 (2017-11-06)
 * Set `ember-frost-core` to use the latest minor
 
