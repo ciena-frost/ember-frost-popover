@@ -1,3 +1,6 @@
+# 6.1.3 (2017-12-12)
+* Change semver range of ember-export-application-global to align with other repos
+
 # 6.1.2 (2017-11-29)
 * **Added** hideDelay option (doesn't work properly for 'click')
 * **Added** include content in events option to inherit events
