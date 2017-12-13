@@ -1,3 +1,6 @@
+# 6.1.4 (2017-12-13)
+* Change semver range of `ember-resolver` to align with other repos
+
 # 6.1.3 (2017-12-12)
 * Change semver range of ember-export-application-global to align with other repos
 
