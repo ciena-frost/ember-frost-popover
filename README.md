@@ -46,24 +46,25 @@ ember install ember-frost-popover
 | Interface | Attributes | Value | Description |
 | ----------| ---------- | ----- | ----------- |
 | Action | `close` | | Close the popover and optionally fire an external action |
-| Option | `offset` | | The amount in pixels the popover should appear from the target (defaults to `10`) |
-| Option | `position` | `top`,`right`,`bottom`,`left`, `auto`| The location of the popover relative to the target. When `auto` is specified, it will dynamically reorient the popover. For example, if position is `auto left`, the popover will display to the left when possible, otherwise it will display right. (defaults to `bottom`) |
 | Option | `closest` | boolean  | When true uses JQuery's [closest function](https://api.jquery.com/closest/). Otherwise just uses main selector `$(<target>)` (defaults to `false`).  |
-| Option | `excludePadding` | boolean  | When true removes the padding from position calculations (defaults to `false`).|
+| Option | `delay` | number | Delay the open of the popover if provided, unit in ms.|
 | Option | `event` |  | The event that will trigger the popover (defaults to on `click`). Uses [on()](http://api.jquery.com/on/)|
+| Option | `excludePadding` | boolean  | When true removes the padding from position calculations (defaults to `false`).|
 | Option | `handlerIn` |  | The event that will open the popover (replaces the `event` when `handlerOut` is also set). Uses [on()](http://api.jquery.com/on/)|
 | Option | `handlerOut` |  | The event that will close the popover (replaces the `event` when `handlerIn` is also set). Uses [on()](http://api.jquery.com/on/)|
-| Option | `target` |  | The selector string of the target that activates the popover |
-| Option | `viewport`| | The selector for the viewport. Defaults to 'body' |
+| Option | `hideDelay` | number | Delay the close of the popover if provided, unit in ms.|
+| Option | `offset` | | The amount in pixels the popover should appear from the target (defaults to `10`) |
+| Option | `position` | `top`,`right`,`bottom`,`left`, `auto`| The location of the popover relative to the target. When `auto` is specified, it will dynamically reorient the popover. For example, if position is `auto left`, the popover will display to the left when possible, otherwise it will display right. (defaults to `bottom`) |
 | Option | `resize` | | If set to false, will prevent the browser from resizing at the edges of the viewport. This preserves the *expand to fit content* behavior of `width: auto`. It defaults to true. |
 | Option | `stopPropagation` | | If set to true event handlers will call `event.stopPropagation()` |
-| Option | `delay` | number | Delay the open of the popover if provided, unit in ms.|
+| Option | `target` |  | The selector string of the target that activates the popover |
+| Option | `viewport`| | The selector for the viewport. Defaults to 'body' |
 
 ## Specifying Target
 
 If the `frost-popover` component is placed next to the `target`, be careful to use a selector that will uniquely
 identify the `target`. If it is nested inside the `target`, you can set `closest` to true which will search the
-nearest ancestor from the `popover`.
+nearest ancestor from the `popover` - which is far more performant than a full dom traversal.
 
 ### A Note On Positioning
 

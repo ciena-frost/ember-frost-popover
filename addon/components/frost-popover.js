@@ -1,11 +1,11 @@
 import Ember from 'ember'
-const {$, Component, get, isPresent, run, typeOf} = Ember
 import {task, timeout} from 'ember-concurrency'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 
 import layout from '../templates/components/frost-popover'
 import {checkBottom, checkLeft, checkRight, checkTop} from './util'
 
+const {$, Component, isPresent, run, typeOf} = Ember
 const arrowMargin = 5
 const maxPlacementRetries = 5
 
@@ -22,7 +22,6 @@ export default Component.extend(PropTypeMixin, {
     excludePadding: PropTypes.bool,
     handlerIn: PropTypes.string,
     handlerOut: PropTypes.string,
-    includeContentInEvents: PropTypes.bool, // making this true lets the content also inheret events properly
     index: PropTypes.number,
     offset: PropTypes.number,
     onDisplay: PropTypes.func,
@@ -43,7 +42,6 @@ export default Component.extend(PropTypeMixin, {
       event: 'click',
       excludePadding: false,
       index: 0,
-      includeContentInEvents: false,
       offset: 10,
       position: 'bottom',
       resize: true,
@@ -66,10 +64,17 @@ export default Component.extend(PropTypeMixin, {
 
   didInsertElement () {
     const target = this.getTarget()
+    const delay = this.get('delay')
     const event = this.get('event')
-    const handlerIn = this.get('handlerIn')
-    const handlerOut = this.get('handlerOut')
+    const hideDelay = this.get('hideDelay')
+    const popover = this.get('element')
     const stopPropagation = this.get('stopPropagation')
+
+    let handlerIn = this.get('handlerIn')
+    let handlerOut = this.get('handlerOut')
+
+    if (event.split(' ').length === 2) { [handlerIn, handlerOut] = event.split(' ') }
+
     if (handlerIn && handlerOut) {
       this._eventHandlerIn = (event) => {
         if (stopPropagation) {
@@ -82,7 +87,6 @@ export default Component.extend(PropTypeMixin, {
           }
           this.cancelShowDelayTask()
           if (!this.get('visible')) {
-            const delay = this.get('delay')
             if (delay) {
               this.showDelay(event, delay)
             } else {
@@ -102,7 +106,6 @@ export default Component.extend(PropTypeMixin, {
           }
           this.cancelShowDelayTask()
           if (this.get('visible')) {
-            const hideDelay = this.get('hideDelay')
             if (hideDelay) {
               this.showDelay(event, hideDelay)
             } else {
@@ -124,8 +127,6 @@ export default Component.extend(PropTypeMixin, {
             return
           }
           this.cancelShowDelayTask()
-          const delay = this.get('delay')
-          const hideDelay = this.get('hideDelay')
 
           if (delay || hideDelay) {
             let delayToUse = this.get('visible') ? hideDelay : delay
@@ -142,6 +143,21 @@ export default Component.extend(PropTypeMixin, {
 
       $(target).on(event, this._eventHandler)
     }
+
+    // handle mouse events on visible popover
+    $(popover).on('mouseenter', event => {
+      if (this.get('visible')) this.cancelShowDelayTask()
+    })
+    $(popover).on('mouseleave', event => {
+      if (this.get('visible')) {
+        if (hideDelay) {
+          this.showDelay(event, hideDelay)
+        } else {
+          this.togglePopover(event)
+        }
+      }
+    })
+    $(popover).on('click', event => event.stopPropagation())
   },
 
   willDestroyElement () {
@@ -164,11 +180,7 @@ export default Component.extend(PropTypeMixin, {
    * @param {DOMEvent} event - click event
    */
   togglePopover (event) {
-    const popover = this.get('element')
-    if ($(event.target).closest(popover).length === 0 ||
-      (get(this, 'includeContentInEvents') === true && event.target === popover)) {
-      this.send('togglePopover', event)
-    }
+    this.send('togglePopover', event)
   },
 
   /**
