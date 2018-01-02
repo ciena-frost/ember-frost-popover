@@ -1,3 +1,9 @@
+# 7.0.0 (2018-01-02)
+
+- removed includeContentsInEvents flag
+- added handlers for hovering over popover when visible
+- add hideDelay to readme and alphabetize options
+
 # 6.1.4 (2017-12-13)
 * Change semver range of `ember-resolver` to align with other repos
 
