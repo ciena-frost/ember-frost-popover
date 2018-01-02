@@ -198,6 +198,54 @@ describe(test.label, function () {
     })
   })
 
+  describe('when hovering with mouseenter/mouseleave for handlerIn/handlerOut', function () {
+    this.timeout(5000)
+
+    beforeEach(function () {
+      this.render(hbs`
+        <div id='foo' class='target'>
+          hover test
+        </div>
+        {{#frost-popover target='#foo' hideDelay=500 event='mouseenter mouseleave'}}
+          <span class='inside'>Inside</span>
+        {{/frost-popover}}
+      `)
+
+      return wait()
+        .then(() => {
+          $('#foo').mouseenter()
+          return wait()
+        })
+        .then(() => {
+          $('#foo').mouseleave()
+
+          run.later(function () {
+            $('.tooltip-frost-popover').mouseenter()
+          }, 100)
+
+          return wait()
+        })
+    })
+
+    it('should still be visible 700ms later if mouseenter has been triggered on popover', function (done) {
+      run.later(function () {
+        expect($('.visible')).to.have.length(1)
+        done()
+      }, 700)
+    })
+
+    it('should dismiss after mouseleave after hovering', function (done) {
+      run.later(function () {
+        $('.tooltip-frost-popover').mouseleave()
+      }, 700)
+
+      run.later(function () {
+        expect($('.visible')).to.have.length(0)
+        done()
+      }, 1300)
+    })
+  })
+
   it('should constrain to the viewport', function (done) {
     this.render(hbs`
       <div id='viewport' style='width: 400px; height: 400px;'>

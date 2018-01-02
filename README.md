@@ -64,7 +64,12 @@ ember install ember-frost-popover
 
 If the `frost-popover` component is placed next to the `target`, be careful to use a selector that will uniquely
 identify the `target`. If it is nested inside the `target`, you can set `closest` to true which will search the
-nearest ancestor from the `popover` - which is far more performant than a full dom traversal.
+nearest ancestor from the `popover`.
+
+### Hover Behavior
+
+The `popover` will by default maintain its visible state when hovered.
+If the events are `mouseenter` and `mouseleave`, adding a `hideDelay` makes hovering over the popover much easier for the user.
 
 ### A Note On Positioning
 

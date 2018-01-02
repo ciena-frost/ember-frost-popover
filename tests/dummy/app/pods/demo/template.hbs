@@ -46,7 +46,7 @@
 
 <h2>Activating Event</h2>
 {{#frost-button hook='mouseEnterButton' size='small' priority='primary' class='event-mouse' text='Mouseenter'}}
-  {{#frost-popover target='.event-mouse' closest=true handlerIn='mouseenter' handlerOut='mouseleave'}}
+  {{#frost-popover target='.event-mouse' closest=true handlerIn='mouseenter' handlerOut='mouseleave' hideDelay=100}}
     <span class='inside'>Tooltip is toggled on mouse enter and mouse leave</span>
   {{/frost-popover}}
 {{/frost-button}}
@@ -66,7 +66,7 @@
 {{/frost-button}}
 
 {{#frost-button hook='mouseEnterDelayButton' size='small' priority='primary' class='child' text='Hover me!'}}
-  {{#frost-popover target='.child' delay=500 handlerIn='mouseenter' handlerOut='mouseleave' excludePadding=true closest=true includeContentInEvents=true}}
+  {{#frost-popover target='.child' delay=500 handlerIn='mouseenter' handlerOut='mouseleave' excludePadding=true closest=true}}
     <span class='inside'>Hover me delayed!</span>
   {{/frost-popover}}
 {{/frost-button}}
@@ -74,7 +74,7 @@
 <h2>Hide Delay display</h2>
 This feature doesn't properly work with 'click' at the moment.<br><br>
 {{#frost-button hook='mouseEnterHideDelayButton' size='small' priority='primary' class='child' text='Hover me!'}}
-  {{#frost-popover target='.child' hideDelay=500 handlerIn='mouseenter' handlerOut='mouseleave' excludePadding=true closest=true includeContentInEvents=true}}
+  {{#frost-popover target='.child' hideDelay=500 handlerIn='mouseenter' handlerOut='mouseleave' excludePadding=true closest=true}}
     <span class='inside'>Hover me hide delayed!</span>
   {{/frost-popover}}
 {{/frost-button}}

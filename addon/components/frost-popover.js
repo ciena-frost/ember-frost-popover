@@ -73,7 +73,10 @@ export default Component.extend(PropTypeMixin, {
     let handlerIn = this.get('handlerIn')
     let handlerOut = this.get('handlerOut')
 
-    if (event.split(' ').length === 2) { [handlerIn, handlerOut] = event.split(' ') }
+    if (event && event.split(' ').length === 2) {
+      [handlerIn, handlerOut] = event.split(' ')
+      this.setProperties({handlerIn, handlerOut})
+    }
 
     if (handlerIn && handlerOut) {
       this._eventHandlerIn = (event) => {
@@ -144,20 +147,35 @@ export default Component.extend(PropTypeMixin, {
       $(target).on(event, this._eventHandler)
     }
 
-    // handle mouse events on visible popover
-    $(popover).on('mouseenter', event => {
-      if (this.get('visible')) this.cancelShowDelayTask()
-    })
-    $(popover).on('mouseleave', event => {
-      if (this.get('visible')) {
-        if (hideDelay) {
-          this.showDelay(event, hideDelay)
-        } else {
-          this.togglePopover(event)
+    // add handlers for persisting visible state when hovering
+    if (handlerIn === 'mouseenter' && handlerOut === 'mouseleave') {
+      // functions declared here for scope
+      this._hoverHandlerIn = event => {
+        if (this.get('visible')) {
+          this.cancelShowDelayTask()
         }
       }
-    })
-    $(popover).on('click', event => event.stopPropagation())
+      this._hoverHandlerOut = event => {
+        const hideDelay = this.get('hideDelay')
+        if (this.get('visible')) {
+          if (hideDelay) {
+            this.showDelay(event, hideDelay)
+          } else {
+            this.togglePopover(event)
+          }
+        }
+      }
+      this._hoverClickHandler = event => {
+        if (this.get('stopPropagation')) {
+          event.stopPropagation()
+        }
+      }
+
+      // handle mouse events on visible popover
+      $(popover).on(handlerIn, this._hoverHandlerIn)
+      $(popover).on(handlerOut, this._hoverHandlerOut)
+      $(popover).on('click', this._hoverClickHandler)
+    }
   },
 
   willDestroyElement () {
@@ -165,22 +183,39 @@ export default Component.extend(PropTypeMixin, {
     const event = this.get('event')
     const handlerIn = this.get('handlerIn')
     const handlerOut = this.get('handlerOut')
+    const popover = this.get('element')
+
     if (handlerIn && handlerOut) {
       $(target).off(handlerIn, this._eventHandlerIn)
       $(target).off(handlerOut, this._eventHandlerOut)
     } else {
       $(target).off(event, this._eventHandler)
     }
+
     this.cancelShowDelayTask()
     this.unregisterClickOff()
+
+    // remove listeners attached for hover behavior
+    if (handlerIn === 'mouseenter' && handlerOut === 'mouseleave') {
+      $(popover).off(handlerIn, this._hoverHandlerIn)
+      $(popover).off(handlerOut, this._hoverHandlerOut)
+      $(popover).off('click', this._hoverClickHandler)
+    }
   },
 
   /**
    * Toggles the popover
-   * @param {DOMEvent} event - click event
+   * @param {DOMEvent} event - mouse event
    */
   togglePopover (event) {
-    this.send('togglePopover', event)
+    const handlerIn = this.get('handlerIn')
+    const handlerOut = this.get('handlerOut')
+    const popover = this.get('element')
+
+    if ($(event.target).closest(popover).length === 0 ||
+        (handlerIn === 'mouseenter' && handlerOut === 'mouseleave')) {
+      this.send('togglePopover', event)
+    }
   },
 
   /**
