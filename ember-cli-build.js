@@ -5,9 +5,6 @@ module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
     babel: {
       optional: ['es7.decorators']
-    },
-    'ember-cli-mocha': {
-      useLintTree: false
     }
   })
 
