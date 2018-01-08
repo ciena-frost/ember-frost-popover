@@ -62,6 +62,7 @@ export default Component.extend(PropTypeMixin, {
     this.get('showDelayTask').perform(event, delay)
   },
 
+  /* eslint-disable complexity */
   didInsertElement () {
     const target = this.getTarget()
     const delay = this.get('delay')
@@ -177,6 +178,7 @@ export default Component.extend(PropTypeMixin, {
       $(popover).on('click', this._hoverClickHandler)
     }
   },
+  /* eslint-enable complexity */
 
   willDestroyElement () {
     const target = this.getTarget()
@@ -265,6 +267,7 @@ export default Component.extend(PropTypeMixin, {
     return values
   },
 
+  /* eslint-disable complexity */
   getTarget () {
     const target = this.get('target')
     const index = this.get('index')
@@ -287,7 +290,6 @@ export default Component.extend(PropTypeMixin, {
     return null
   },
 
-  /* eslint-disable complexity */
   getViewport () {
     const viewportProp = this.get('viewport')
 
