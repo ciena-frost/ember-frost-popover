@@ -84,7 +84,6 @@ export default Component.extend(PropTypeMixin, {
         if (stopPropagation) {
           event.stopPropagation()
         }
-        // eslint-disable-next-line complexity
         run.next(() => {
           if (this.isDestroyed || this.isDestroying) {
             return
@@ -125,7 +124,6 @@ export default Component.extend(PropTypeMixin, {
         if (stopPropagation) {
           event.stopPropagation()
         }
-        // eslint-disable-next-line complexity
         run.next(() => {
           if (this.isDestroyed || this.isDestroying) {
             return
@@ -471,7 +469,7 @@ export default Component.extend(PropTypeMixin, {
       left
     }
   },
-  //* eslint-enable complexity */
+  /* eslint-enable complexity */
 
   /**
    * Attempts to place the popover repeating up to maxPlacementRetries since every placement could
