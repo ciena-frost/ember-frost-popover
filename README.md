@@ -69,7 +69,8 @@ nearest ancestor from the `popover`.
 ### Hover Behavior
 
 The `popover` will by default maintain its visible state when hovered.
-If the events are `mouseenter` and `mouseleave`, adding a `hideDelay` makes hovering over the popover much easier for the user.
+If the events are `mouseenter` and `mouseleave`, adding a `hideDelay` makes hovering over the popover much easier
+for the user.
 
 ### A Note On Positioning
 
