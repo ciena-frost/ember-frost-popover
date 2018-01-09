@@ -1,3 +1,30 @@
+# 8.0.0 (2018-01-09)
+* **Added** `ember-frost-test` @ `^4.0.0`
+* **Added** `chai-jquery` @ `^2.0.0`
+* **Updated** `ember-cli-chai` to `0.4.3`
+* **Updated** to pin `ember-cli-code-coverage` @ `0.3.12`
+* **Updated** `ember-cli-mocha` to `0.14.4`
+* **Added** `ember-hook` @ `1.4.2`
+* **Added** `ember-sinon` @ `^0.7.0`
+* **Updated** `ember-test-utils` to `^8.1.0`
+* **Added** `sinon-chai` @ `^2.14.0`
+* **Added** ignoring of `package-lock.json` until we are ready to move to node 8
+* **Removed** useLintTree ember-cli-mocha configuration from `ember-cli-build.js`
+* **Removed** blueprint file since dependent packages are now included via dependencies
+* **Updated** `ember-cli-frost-blueprints` to `^5.0.1`
+* **Removed** `ember-computed-decorators` and removed necessary babel config
+* **Updated** `ember-concurrency` to be a dependency instead of devDependency
+* **Removed** unused `ember-elsewhere` package
+* **Updated** `ember-prop-types` to `^6.0.1` and moved to dependency instead of devDependency
+* **Removed** unused `ember-spread` package
+* **Removed** unused `ember-truth-helpers` package
+* **Updated** `ember-cli-sass` to `7.1.1`
+* **Updated** `ember-frost-core` to `^5.0.0`
+* **Removed** previous `.eslintrc` file which has now been replaced by `.eslintrc.js`
+* **Removed** `.remarkrc` file since it is now provided by `ember-test-utils`
+
+  
+
 # 7.0.0 (2018-01-02)
 
 - removed includeContentsInEvents flag
