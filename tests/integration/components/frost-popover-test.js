@@ -23,6 +23,18 @@ describe(test.label, function () {
     expect(this.$()).to.have.length(1)
   })
 
+  it('should default to display: none', function () {
+    this.render(hbs`
+      <div class='target'>
+        frost-popover testbed
+      </div>
+      {{#frost-popover target='.target'}}
+        <span class='inside'>Inside</span>
+      {{/frost-popover}}
+    `)
+    expect(this.$('.tooltip-frost-popover').css('display')).to.equal('none')
+  })
+
   it('should click', function (done) {
     this.timeout(5000)
     this.render(hbs`
@@ -67,6 +79,24 @@ describe(test.label, function () {
             done()
           }, 100)
         }, 100)
+      }, 100)
+    }, 100)
+  })
+
+  it('should set display to block on hover', function (done) {
+    this.render(hbs`
+      <div id='foo' class='target'>
+        click test
+      </div>
+      {{#frost-popover target='#foo' handlerIn='mouseenter' handlerOut='mouseleave'}}
+        <span class='inside'>Inside</span>
+      {{/frost-popover}}
+    `)
+    run.later(function () {
+      $('#foo').mouseenter()
+      run.later(function () {
+        expect($('.tooltip-frost-popover').css('display')).to.equal('block')
+        done()
       }, 100)
     }, 100)
   })
