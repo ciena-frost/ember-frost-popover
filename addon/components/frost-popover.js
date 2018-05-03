@@ -20,6 +20,7 @@ export default Component.extend(PropTypeMixin, {
     hideDelay: PropTypes.number, // This currently doesn't work properly with 'click'
     event: PropTypes.string,
     excludePadding: PropTypes.bool,
+    handleHideOnClose: PropTypes.bool,
     handlerIn: PropTypes.string,
     handlerOut: PropTypes.string,
     index: PropTypes.number,
@@ -41,6 +42,7 @@ export default Component.extend(PropTypeMixin, {
       closest: false,
       event: 'click',
       excludePadding: false,
+      handleHideOnClose: false,
       index: 0,
       offset: 10,
       position: 'bottom',
@@ -228,6 +230,9 @@ export default Component.extend(PropTypeMixin, {
       this.get('showDelayTask').cancelAll()
       this.set('visible', false)
       this.unregisterClickOff()
+      if (this.get('handleHideOnClose')) {
+        this.handleHide()
+      }
     }
   },
 
