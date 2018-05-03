@@ -59,6 +59,7 @@ ember install ember-frost-popover
 | Option | `stopPropagation` | | If set to true event handlers will call `event.stopPropagation()` |
 | Option | `target` |  | The selector string of the target that activates the popover |
 | Option | `viewport`| | The selector for the viewport. Defaults to 'body' |
+| Option | `handleHideOnClose`| | If set to true, calls the onHide() function provided in the case where a click would occur outside the button that opened the popover. Defaults to 'false' |
 
 ## Specifying Target
 
