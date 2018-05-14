@@ -228,6 +228,7 @@ export default Component.extend(PropTypeMixin, {
       this.get('showDelayTask').cancelAll()
       this.set('visible', false)
       this.unregisterClickOff()
+      this.handleHide()
     }
   },
 

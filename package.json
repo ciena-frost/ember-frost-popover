@@ -26,7 +26,8 @@
   },
   "contributors": [
     "Sophy Pal (https://github.com/sophypal)",
-    "Matthew Dahl (https://github.com/sandersky)"
+    "Matthew Dahl (https://github.com/sandersky)",
+    "Martin Heon (https://github.com/mo0om)"
   ],
   "license": "MIT",
   "devDependencies": {
