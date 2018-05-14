@@ -516,12 +516,14 @@ export default Component.extend(PropTypeMixin, {
 
       if (this.get('visible')) {
         this.registerClickOff()
-        let offset = this.resolvePlacement()
 
+        const $element = $(this.get('element'))
+        $element.css('display', 'block')
+        let offset = this.resolvePlacement()
         const delta = this.getViewportAdjustments(position)
 
         // apply delta to contain the popover inside the viewport
-        $(this.get('element')).css({
+        $element.css({
           top: offset.top + delta.top,
           left: offset.left + delta.left
         })

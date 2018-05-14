@@ -1,3 +1,7 @@
+# 10.0.1 (2018-05-04)
+- Default popovers to display: none
+
+
 # 10.0.0 (2018-04-13)
 * **Updated** `ember-frost-core` to version `^8.0.0`
 
