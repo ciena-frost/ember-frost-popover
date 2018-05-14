@@ -1,3 +1,8 @@
+# 11.0.0 (2018-05-14)
+
+- calling handleHide() on close of popover
+
+
 # 10.0.1 (2018-05-04)
 - Default popovers to display: none
 
