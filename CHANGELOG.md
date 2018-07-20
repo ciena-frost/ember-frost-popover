@@ -1,3 +1,8 @@
+# 11.0.1 (2018-07-20)
+
+* **Fixed** Travis API key.
+
+
 # 11.0.0 (2018-05-14)
 
 - calling handleHide() on close of popover
