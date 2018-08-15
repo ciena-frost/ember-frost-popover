@@ -1,0 +1,32 @@
+.frost-popover-svg {
+  opacity: .85;
+
+  &.tooltip-hidden {
+    display: none;
+  }
+
+  .inside {
+    padding: .5em;
+    border-radius: 3px;
+    background-color: $frost-color-grey-2;
+    color: $frost-color-white;
+    font-size: $frost-font-xs;
+
+    .item {
+      opacity: 1;
+
+      &-label {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .tooltip-arrow {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    margin: -5px 10px;
+    transform: rotate(45deg);
+    background-color: $frost-color-grey-2;
+  }
+}

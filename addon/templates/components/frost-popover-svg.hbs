@@ -1,0 +1,10 @@
+<div class='inside'>
+  {{#if content}}
+    {{content}}
+  {{else if items}}
+    {{#each items as |item|}}
+      <span class='item'><span class='item-label'>{{item.label}}</span>: {{item.value}}</span>
+    {{/each}}
+  {{/if}}
+</div>
+<div class='tooltip-arrow'></div>
