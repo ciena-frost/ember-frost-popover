@@ -6,6 +6,8 @@
   }
 
   .inside {
+    display: flex;
+    flex-direction: column;
     padding: .5em;
     border-radius: 3px;
     background-color: $frost-color-grey-2;
