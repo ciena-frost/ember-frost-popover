@@ -3,7 +3,7 @@ import {task, timeout} from 'ember-concurrency'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 
 import layout from '../templates/components/frost-popover'
-import {checkBottom, checkLeft, checkRight, checkTop} from './util'
+import {checkBottom, checkLeft, checkRight, checkTop} from 'ember-frost-popover/utils/position'
 
 const {$, Component, isPresent, run, typeOf} = Ember
 const arrowMargin = 5

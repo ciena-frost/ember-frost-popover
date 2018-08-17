@@ -145,3 +145,20 @@ This feature doesn't properly work with 'click' at the moment.<br><br>
     {{/frost-popover}}
   {{/frost-button}}
 </div>
+
+<h2>SVG</h2>
+
+<svg width=200 height=80>
+  {{svg-rectangle hook='rectangle'
+    onMouseEnter=(action 'showTooltip')
+    onMouseLeave=(action 'showTooltip')
+  }}
+  {{frost-popover-svg
+    hook='tooltip'
+    x=tooltip.x
+    y=tooltip.y
+    yOffset=5
+    xOffset=10
+    items=tooltip.items
+  }}
+</svg>
