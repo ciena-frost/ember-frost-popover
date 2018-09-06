@@ -1,3 +1,7 @@
+# 11.2.0 (2018-09-06)
+
+* Add basic svg popover
+
 # 11.1.0 (2018-08-17)
 
 * Add basic svg popover
